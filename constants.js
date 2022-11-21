@@ -1,0 +1,1 @@
+export const API_BASE_URL = 'https://minddeft.net/dev_blog/wp-json/md/v1'

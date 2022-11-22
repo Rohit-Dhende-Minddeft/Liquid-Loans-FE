@@ -17,42 +17,12 @@ import {
 import FootArrow from "../public/images/footer-arrow.png";
 import Image from "next/image";
 
-const closeIcon = (
-  <svg fill="currentColor" viewBox="0 0 43 43" width={30} height={30}>
-    <line
-      x1="15"
-      y1="15"
-      x2="30"
-      y2="30"
-      stroke="#ffffff"
-      stroke-width="3"
-      stroke-linecap="round"
-      stroke-miterlimit="16"
-    ></line>
-    <line
-      x1="30"
-      y1="15"
-      x2="15"
-      y2="30"
-      stroke="#ffffff"
-      stroke-width="3"
-      stroke-linecap="round"
-      stroke-miterlimit="16"
-    ></line>
-  </svg>
-);
-
 const Footer = () => {
-  const [openFirst, setOpenFirst] = useState(false);
-  const [openSecond, setOpenSecond] = useState(false);
-  const [openThird, setOpenThird] = useState(false);
-
   return (
     <FooterSection>
       <Gs.Container style={{ maxWidth: "1300px" }}>
         <Fade cascade bottom>
           <FooterPart1>
-            {/* <Link to='/'>Home</Link> */}``
             <SocialIcons>
               <Link
                 className="fb"

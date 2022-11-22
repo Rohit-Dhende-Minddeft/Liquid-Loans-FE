@@ -7,9 +7,13 @@ const baseUrl = "https://minddeft.net/dev_blog/wp-json/md/v1";
 export function AppWrapper({ children }) {
   const [categories, setCategories] = useState();
   const getCategories = async () => {
-    const res = await fetch(`${baseUrl}/categories`);
-    const data = await res.json();
-    setCategories(data);
+    try {
+      const res = await fetch('https://minddeft.net/dev_blog/wp-json/md/v1/categories');
+      const data = await res.json();
+      setCategories(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {

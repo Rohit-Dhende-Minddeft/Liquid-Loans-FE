@@ -27,11 +27,13 @@ export const getServerSideProps = async () => {
 
 const Home = (props) => {
   const { categories, blogs } = props;
+  const imagePerRow = 2;
 
+  const [next, setNext] = useState(imagePerRow);
+  const handleMoreImage = () => {
+    setNext(next + imagePerRow);
+  };
   const [isOpen01, setIsOpen01] = useState(false);
-  useEffect(() => {
-    // window.scrollTo(0, 10)
-  }, []);
 
   const breakpointColumnsObj = {
     default: 3,
@@ -59,10 +61,12 @@ const Home = (props) => {
         item.post_author?.toLowerCase().includes(filter.toLowerCase())
       ) {
         return item;
+      } else {
+        return null;
       }
     });
     setFilteredData(filteredData);
-  }, [filter, blogs]);
+  }, []);
 
   return (
     <>
@@ -148,7 +152,7 @@ const Home = (props) => {
                 className="my-masonry-grid"
                 columnClassName="my-masonry-grid_column"
               >
-                {filteredData?.map((blog, index) => {
+                {filteredData?.slice(0, next)?.map((blog, index) => {
                   return (
                     <div className="postMbx" key={index}>
                       <Link
@@ -168,7 +172,17 @@ const Home = (props) => {
               </Masonry>
 
               <ButtonBar01>
-                <button className="btn01">LOAD MORE</button>
+                {next < filteredData?.length ? (
+                  <button
+                    onClick={handleMoreImage}
+                    type="button"
+                    className="btn01"
+                  >
+                    Load More +
+                  </button>
+                ) : (
+                  <h1>You catched up with all the articles </h1>
+                )}
               </ButtonBar01>
 
               <BottomMBX>

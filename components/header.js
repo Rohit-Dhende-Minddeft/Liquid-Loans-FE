@@ -12,12 +12,11 @@ import DarkLogo from "../public/images/darkLogo.png";
 import LightLogo from "../public/images/lightLogo.png";
 import SpriteIMG from "../public/images/sprite.png";
 import Image from "next/image";
-import { useAppContext } from "../context/state";
+
 
 function Header(props) {
-  // const { categories } = props;
-  const { categories } = useAppContext();
 
+console.log(props)
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const [isOpen3, setIsOpen3] = useState(false);
@@ -112,7 +111,7 @@ function Header(props) {
                                 "arrow-up  " + (isOpen5 ? "active" : "")
                               }
                             ></div>
-                            {categories?.map((categorie, index) => {
+                            {props.categories?.map((categorie, index) => {
                               return (
                                 <Link
                                   key={index}

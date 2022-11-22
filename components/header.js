@@ -15,8 +15,6 @@ import Image from "next/image";
 
 
 function Header(props) {
-
-console.log(props)
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const [isOpen3, setIsOpen3] = useState(false);

@@ -4,9 +4,9 @@ import Gs from "../../styles/theme.config";
 import Link from "next/link";
 import { AiFillSound } from "react-icons/ai";
 import Media from "../../styles/media-breackpoint";
-import UserImg01 from "../public/images/images/user-ico.jpg";
-import DImg01 from "../public/images/images/img-01.jpg";
-import DImg02 from "../public/images/images/img-02.jpg";
+import UserImg01 from "../../public/images/user-ico.jpg";
+import DImg01 from "../../public/images/img-01.jpg";
+import DImg02 from "../../public/images/img-02.jpg";
 import { useRouter } from "next/router";
 import Sticky from "react-stickynode";
 import { API_BASE_URL } from "../../constants";
@@ -40,9 +40,9 @@ const BlogDetail = (props) => {
     <>
       <Head>
         <meta charSet="utf-8" />
-        <title>{blog.post_title}</title>
-        <meta property="og:title" content={`${blog.fb_og_title}`} />
-        <meta property="og:description" content={`${blog.post_content}`} />
+        <title>{blog?.post_title}</title>
+        <meta property="og:title" content={`${blog?.fb_og_title}`} />
+        <meta property="og:description" content={`${blog?.post_content}`} />
       </Head>
       <HomeBG>
         <Gs.Container className="blFont">
@@ -51,15 +51,15 @@ const BlogDetail = (props) => {
 
             <MainHeadS>
               <h1>
-                Centralized (CEX) vs Decentralized Exchanges (DEX):{" "}
+                Centralized (CEX) vs Decentralized Exchanges (DEX):
                 <span>What You Need to Know</span>
               </h1>
 
               <CateLink>
-                <Link to="" href={""}>
+                <Link  href={""}>
                   DeFi,
-                </Link>{" "}
-                <Link to="" href={""}>
+                </Link>
+                <Link  href={""}>
                   Blockchain
                 </Link>
               </CateLink>
@@ -122,7 +122,7 @@ const BlogDetail = (props) => {
                   <h2>What is a Centralized Exchange (CEX)?</h2>
                   <p>
                     The first ever crypto trading platforms started as{" "}
-                    <h3>centralized exchanges</h3> or CEXs for short. They’re
+                    centralized exchangesor CEXs for short. They’re
                     essentially companies that provide trading services, except
                     they manage cryptocurrencies instead of traditional
                     currencies. Like every financial organization, they’re
@@ -133,13 +133,13 @@ const BlogDetail = (props) => {
                     While they never advertise as such, CEXs are asset managers.
                     Whenever you trade cryptocurrencies from these platforms,
                     you’re{" "}
-                    <h3>transferring financial ownership to the company</h3> and{" "}
-                    <h3>trusting</h3> that they will use your balance as
+                    transferring financial ownership to the company and{" "}
+                    trusting that they will use your balance as
                     intended. In practice, your money goes to a collective
                     wallet that automatically fulfills everyone’s orders.{" "}
                   </p>
                   <p>
-                    We call them <h3>custodial wallets</h3>. Binance, Coinbase,
+                    We call them custodial wallets. Binance, Coinbase,
                     Kraken, KuCoin, eToro, and all CEXs have one. In finance,
                     trust is backed by legal procedures such as:
                   </p>
@@ -191,7 +191,7 @@ const BlogDetail = (props) => {
                   </p>
                   <p>
                     Almost all CEXs are crypto-fiat (otherwise you’re better off
-                    using <h4>DEXs</h4>). National CEXs only support the
+                    using DEXs). National CEXs only support the
                     country’s official currency while platforms like Binance
                     have the 5-10 most used worldwide. Still, almost every
                     crypto pair is either in BTC or USD, and fiat-fiat pairs are

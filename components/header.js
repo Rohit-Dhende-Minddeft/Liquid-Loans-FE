@@ -12,9 +12,12 @@ import DarkLogo from "../public/images/darkLogo.png";
 import LightLogo from "../public/images/lightLogo.png";
 import SpriteIMG from "../public/images/sprite.png";
 import Image from "next/image";
+import { useAppContext } from "../context/state";
 
 function Header(props) {
-  const { categories } = props;
+  // const { categories } = props;
+  const { categories } = useAppContext();
+
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const [isOpen3, setIsOpen3] = useState(false);

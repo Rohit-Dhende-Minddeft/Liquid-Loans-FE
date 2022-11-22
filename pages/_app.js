@@ -7,6 +7,7 @@ import Footer from "../components/footer";
 import ScrollButton from "../components/scrollButton";
 import Gs from "../styles/theme.config";
 import { getCategories } from "./api/blogs";
+import { AppWrapper } from "../context/state";
 
 export const getServerSideProps = async () => {
   const categories = await getCategories();
@@ -25,17 +26,23 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <ThemeProvider theme={selectedTheme}>
-      <section className="MainBox clearfix">
-        <Gs.GlobalStyle />
-        <Header
-          isDarkTheme={isDark}
-          setTheme={setTheme}
-          categories={pageProps.categories}
-        />
-        <Component {...pageProps} isDarkTheme={isDark} />
-        <Footer />
-        <ScrollButton isDarkTheme={isDark} />
-      </section>
+      <AppWrapper>
+        <section className="MainBox clearfix">
+          <Gs.GlobalStyle />
+          <Header
+            isDarkTheme={isDark}
+            setTheme={setTheme}
+            categories={pageProps.categories}
+          />
+          <Component
+            {...pageProps}
+            isDarkTheme={isDark}
+            categories={pageProps.categories}
+          />
+          <Footer />
+          <ScrollButton isDarkTheme={isDark} />
+        </section>
+      </AppWrapper>
     </ThemeProvider>
   );
 }

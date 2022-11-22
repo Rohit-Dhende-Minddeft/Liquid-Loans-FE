@@ -14,6 +14,7 @@ import SpriteIMG from "../public/images/sprite.png";
 import Image from "next/image";
 
 function Header(props) {
+  const { categories } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const [isOpen3, setIsOpen3] = useState(false);
@@ -82,7 +83,7 @@ function Header(props) {
                 <Link href="/">
                   <Image
                     src={props.isDarkTheme ? DarkLogo : LightLogo}
-                    alt="logo"
+                    alt=""
                   />
                 </Link>
               </Logo>
@@ -108,11 +109,20 @@ function Header(props) {
                                 "arrow-up  " + (isOpen5 ? "active" : "")
                               }
                             ></div>
-                            {/* {props.categories.map((categorie,index)=>{
+                            {categories?.map((categorie, index) => {
                               return (
-                                <Link key={index} to='' onClick={() => { setIsOpen(false); setIsOpen5(false); }}>{categorie.cat_name}</Link>
-                              )
-                            })} */}
+                                <Link
+                                  key={index}
+                                  href=""
+                                  onClick={() => {
+                                    setIsOpen(false);
+                                    setIsOpen5(false);
+                                  }}
+                                >
+                                  {categorie.cat_name}
+                                </Link>
+                              );
+                            })}
                           </div>
                         </Collapse>
                       </MenuBox>
@@ -178,7 +188,7 @@ function Header(props) {
                             >
                               <div className="Mi Mi4"></div>FAQs
                             </Link>
-                            <Link
+                            <a
                               href="https://liquidloans.io/learn/"
                               onClick={() => {
                                 setIsOpen(false);
@@ -186,7 +196,7 @@ function Header(props) {
                               }}
                             >
                               <div className="Mi Mi5"></div>Learn
-                            </Link>
+                            </a>
                           </div>
                         </Collapse>
                       </MenuBox>
@@ -266,7 +276,15 @@ function Header(props) {
                             >
                               <div className="Mi Mi13"></div>Downloads
                             </Link>
-                            {/* <NavLink to='/connect' onClick={() => { setIsOpen2(false); setIsOpen3(false); }}><div className="Mi Mi11"></div>Connect</NavLink> */}
+                            <Link
+                              href="/connect"
+                              onClick={() => {
+                                setIsOpen2(false);
+                                setIsOpen3(false);
+                              }}
+                            >
+                              <div className="Mi Mi11"></div>Connect
+                            </Link>
                           </div>
                         </Collapse>
                       </MenuBox>
@@ -477,6 +495,7 @@ const HeadRMBX = styled(FlexDiv)`
   justify-content: center;
   position: relative;
   display: block;
+
   ${Media.sm} {
     width: 100%;
     padding-top: 15px;

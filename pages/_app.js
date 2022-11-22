@@ -5,10 +5,17 @@ import { ThemeProvider } from "styled-components";
 import { theme } from "../styles/theme";
 import Footer from "../components/footer";
 import ScrollButton from "../components/scrollButton";
-import Gs from '../styles/theme.config'
+import Gs from "../styles/theme.config";
+import { getCategories } from "./api/blogs";
+
+export const getServerSideProps = async () => {
+  const categories = await getCategories();
+  return {
+    props: { categories },
+  };
+};
 
 function MyApp({ Component, pageProps }) {
-  
   const [isDark, setDarkTheme] = useState(false);
   const selectedTheme = theme(isDark);
 
@@ -20,8 +27,12 @@ function MyApp({ Component, pageProps }) {
     <ThemeProvider theme={selectedTheme}>
       <section className="MainBox clearfix">
         <Gs.GlobalStyle />
-        <Header isDarkTheme={isDark} setTheme={setTheme} />
-        <Component {...pageProps} isDarkTheme={isDark}/>
+        <Header
+          isDarkTheme={isDark}
+          setTheme={setTheme}
+          categories={pageProps.categories}
+        />
+        <Component {...pageProps} isDarkTheme={isDark} />
         <Footer />
         <ScrollButton isDarkTheme={isDark} />
       </section>

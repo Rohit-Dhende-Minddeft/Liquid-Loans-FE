@@ -15,9 +15,19 @@ import BTMBXico01 from "../public/images/faq-ico.png";
 import BTMBXico02 from "../public/images/utube-ico.png";
 import Card from "../components/Card";
 import Image from "next/image";
+import { getCategories, getBlogs } from "./api/blogs";
+
+export const getServerSideProps = async () => {
+  const blogs = await getBlogs();
+  const categories = await getCategories();
+  return {
+    props: { blogs, categories },
+  };
+};
 
 const Home = (props) => {
   const { categories, blogs } = props;
+
   const [isOpen01, setIsOpen01] = useState(false);
   useEffect(() => {
     // window.scrollTo(0, 10)
@@ -336,7 +346,7 @@ const UserInfoBX = styled(FlexDiv)`
 const BTitle01 = styled(FlexDiv)`
   width: 100%;
   justify-content: space-between;
-  padding: 0 10px;
+  padding: 10px;
   font-size: 40px;
   font-weight: 600;
   color: #000;
@@ -369,6 +379,8 @@ const BSubbox02 = styled(FlexDiv)`
       width: 0;
       opacity: 0;
       visibility: hidden;
+      transition: all 0.3s ease-in-out;
+
       &.active {
         width: 380px;
         opacity: 1;
@@ -382,6 +394,7 @@ const BSubbox02 = styled(FlexDiv)`
         display: flex;
         width: 25px;
         height: 25px;
+        cursor: pointer;
         :hover {
           opacity: 0.8;
         }
@@ -402,6 +415,7 @@ const BSubbox02 = styled(FlexDiv)`
     width: 45px;
     height: 45px;
     border: none;
+    cursor: pointer;
     background: url(${IcoSearch.src}) 50% 50% no-repeat;
     :hover {
       filter: brightness(1.2);

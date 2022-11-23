@@ -26,9 +26,9 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <ThemeProvider theme={selectedTheme}>
+      <Gs.GlobalStyle />
       <AppWrapper>
         <section className="MainBox clearfix">
-          <Gs.GlobalStyle />
           <Header
             isDarkTheme={isDark}
             setTheme={setTheme}

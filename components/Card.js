@@ -1,22 +1,33 @@
 import BlogImg01 from "../public/images/bimg-01.jpg";
 import UserImg01 from "../public/images/user-ico.jpg";
 import styled from "styled-components";
-import parse from "react-html-parser";
 import Image from "next/image";
+import styles from "../styles/Card.module.css";
 
 const Card = (props) => {
-  const { title, content, author } = props;
+  const { title, content, author, readingTime, categories } = props;
+  const categoryNames = categories.map((cat) => cat.name);
   return (
     <>
       <div className="BimgBX01">
         <Image src={BlogImg01} alt="" />
       </div>
       <div className="blogPostTitle01">
-        <span>Defi, Blockchain</span>
-        <span>18 mins</span>
+        <div className={`${styles.blogPostTitle01CatContainer}`}>
+          {categoryNames.map((category) => {
+            return <span>{category}</span>;
+          })}
+        </div>
+        {readingTime && (
+          <span>
+            {readingTime} {readingTime <= "1" ? "min" : "mins"}
+          </span>
+        )}
       </div>
       {title && <div className="blogPostTitle02">{title}</div>}
-      {content && <div className="blogPostText01">{parse(content)}</div>}
+      {content && (
+        <div className={`blogPostText01 ${styles.lineClamp}`}>{content}</div>
+      )}
       <UserInfoBX className="v2">
         <div className="ImgBX">
           <Image src={UserImg01} alt="" />

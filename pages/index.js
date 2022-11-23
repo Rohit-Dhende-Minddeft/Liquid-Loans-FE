@@ -52,21 +52,21 @@ const Home = (props) => {
 
   //Filters the blogs according to the option selected
   useEffect(() => {
-    const filteredData = blogs?.filter((item) => {
+    const filteredData = blogs?.filter((item, index) => {
       if (filter === "all") {
         return item;
       } else if (
         item.post_title?.toLowerCase().includes(filter.toLowerCase()) ||
-        item.post_content?.toLowerCase().includes(filter.toLowerCase()) ||
-        item.post_author?.toLowerCase().includes(filter.toLowerCase())
+        item.category
+          ?.map((cat) => cat.slug?.toLowerCase())
+          .includes(filter.toLowerCase()) ||
+        item.author?.toLowerCase().includes(filter.toLowerCase())
       ) {
         return item;
-      } else {
-        return null;
       }
     });
     setFilteredData(filteredData);
-  }, []);
+  }, [filter]);
 
   return (
     <>
@@ -162,8 +162,10 @@ const Home = (props) => {
                         <Card
                           key={index}
                           title={blog.post_title}
-                          content={blog.post_content}
+                          content={blog.descrption}
                           author={blog.author}
+                          readingTime={blog.reading_time}
+                          categories={blog.category}
                         />
                       </Link>
                     </div>

@@ -1,0 +1,10 @@
+/* Verticle Text overflow */
+.lineClamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.blogPostTitle01CatContainer span {
+  margin-right: 5px;
+}

@@ -56,12 +56,8 @@ const BlogDetail = (props) => {
               </h1>
 
               <CateLink>
-                <Link  href={""}>
-                  DeFi,
-                </Link>
-                <Link  href={""}>
-                  Blockchain
-                </Link>
+                <Link href={""}>DeFi,</Link>
+                <Link href={""}>Blockchain</Link>
               </CateLink>
             </MainHeadS>
 
@@ -122,26 +118,25 @@ const BlogDetail = (props) => {
                   <h2>What is a Centralized Exchange (CEX)?</h2>
                   <p>
                     The first ever crypto trading platforms started as{" "}
-                    centralized exchangesor CEXs for short. They’re
-                    essentially companies that provide trading services, except
-                    they manage cryptocurrencies instead of traditional
-                    currencies. Like every financial organization, they’re
-                    subject to regulations, security checks, and investment
-                    insurance (better known in the US as FDIC).
+                    centralized exchangesor CEXs for short. They’re essentially
+                    companies that provide trading services, except they manage
+                    cryptocurrencies instead of traditional currencies. Like
+                    every financial organization, they’re subject to
+                    regulations, security checks, and investment insurance
+                    (better known in the US as FDIC).
                   </p>
                   <p>
                     While they never advertise as such, CEXs are asset managers.
                     Whenever you trade cryptocurrencies from these platforms,
-                    you’re{" "}
-                    transferring financial ownership to the company and{" "}
-                    trusting that they will use your balance as
-                    intended. In practice, your money goes to a collective
-                    wallet that automatically fulfills everyone’s orders.{" "}
+                    you’re transferring financial ownership to the company and{" "}
+                    trusting that they will use your balance as intended. In
+                    practice, your money goes to a collective wallet that
+                    automatically fulfills everyone’s orders.{" "}
                   </p>
                   <p>
-                    We call them custodial wallets. Binance, Coinbase,
-                    Kraken, KuCoin, eToro, and all CEXs have one. In finance,
-                    trust is backed by legal procedures such as:
+                    We call them custodial wallets. Binance, Coinbase, Kraken,
+                    KuCoin, eToro, and all CEXs have one. In finance, trust is
+                    backed by legal procedures such as:
                   </p>
                   <p>
                     In finance, trust is backed by legal procedures such as:
@@ -191,11 +186,10 @@ const BlogDetail = (props) => {
                   </p>
                   <p>
                     Almost all CEXs are crypto-fiat (otherwise you’re better off
-                    using DEXs). National CEXs only support the
-                    country’s official currency while platforms like Binance
-                    have the 5-10 most used worldwide. Still, almost every
-                    crypto pair is either in BTC or USD, and fiat-fiat pairs are
-                    very rare.
+                    using DEXs). National CEXs only support the country’s
+                    official currency while platforms like Binance have the 5-10
+                    most used worldwide. Still, almost every crypto pair is
+                    either in BTC or USD, and fiat-fiat pairs are very rare.
                   </p>
                   <p>
                     Examples of fiat-only CEXs are TDAmeritrade, Fidelity, and

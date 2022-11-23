@@ -86,7 +86,7 @@ const Home = (props) => {
                 </HeroTitle01>
                 <HeroTitle02>
                   Centralized (CEX) vs Decentralized Exchanges (DEX):
-                  <span>What You Need to Know</span>
+                  <span> What You Need to Know</span>
                 </HeroTitle02>
                 <HeroText01>
                   Understanding Centralized vs Decentralized Exchanges is vital

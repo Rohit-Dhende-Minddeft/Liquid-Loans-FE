@@ -8,6 +8,7 @@ import ScrollButton from "../components/scrollButton";
 import Gs from "../styles/theme.config";
 import { getCategories } from "./api/blogs";
 import { AppWrapper } from "../context/state";
+import Head from "next/head";
 
 export const getServerSideProps = async () => {
   const categories = await getCategories();
@@ -26,6 +27,60 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <ThemeProvider theme={selectedTheme}>
+      <Head>
+        <meta charset="utf-8" />
+
+        <link rel="apple-touch-icon" href="./images/favicon.png" />
+        <title>Liquid Loans – 0% DeFi lending on PulseChain</title>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=no"
+        />
+        <meta
+          name="keywords"
+          content="Liquid Loans. 0% Interest Free Borrowing built for PulseChain. #neverselling "
+        />
+        <meta
+          name="description"
+          content="✓ 0% Interest-Free ✓ Algorithmic Stablecoin ✓ Immutable ✓ Governance-Free ✓ No Admin Keys"
+        />
+        <meta
+          name="google-site-verification"
+          content="tFM5T7kMGqGaqNMe8Cs6EvJ8PZrT45_9bncFeILmOKA"
+        />
+        <link rel="canonical" href="https://liquidloans.io" />
+        <meta name="robots" content="index, follow" />
+        <meta name="revisit-after" content="3 days" />
+
+        <meta property="og:url" content="https://liquidloans.io/" />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:title"
+          content="Liquid Loans. 0% Interest Free Borrowing built for PulseChain. #neverselling"
+        />
+        <meta
+          property="og:description"
+          content="✓ 0% Interest-Free ✓ Algorithmic Stablecoin ✓ Immutable ✓ Governance-Free ✓ No Admin Keys"
+        />
+        <meta
+          property="og:image"
+          content=" https://liquidloans.io/images/liquidloans.jpg"
+        />
+        <meta name="twitter:card" content="summary" />
+        <meta
+          name="twitter:title"
+          content="Liquid Loans. 0% Interest Free Borrowing built for PulseChain. #neverselling"
+        />
+        <meta name="twitter:url" content="https://liquidloans.io/" />
+        <meta
+          name="twitter:description"
+          content="✓ 0% Interest-Free ✓ Algorithmic Stablecoin ✓ Immutable ✓ Governance-Free ✓ No Admin Keys"
+        />
+        <meta
+          name="twitter:image"
+          content="https://liquidloans.io/images/liquidloans.jpg"
+        />
+      </Head>
       <Gs.GlobalStyle />
       <AppWrapper>
         <section className="MainBox clearfix">
@@ -34,10 +89,7 @@ function MyApp({ Component, pageProps }) {
             setTheme={setTheme}
             categories={pageProps.categories}
           />
-          <Component
-            {...pageProps}
-            isDarkTheme={isDark}
-          />
+          <Component {...pageProps} isDarkTheme={isDark} />
           <Footer />
           <ScrollButton isDarkTheme={isDark} />
         </section>

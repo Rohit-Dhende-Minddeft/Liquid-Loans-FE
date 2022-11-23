@@ -17,8 +17,9 @@ const Card = (props) => {
         <div className={`${styles.blogPostTitle01CatContainer}`}>
           {categoryNames.map((category, index) => {
             return (
-              <span>
-                {category}{categoryNames?.length -1 === index ? "" : ", "}
+              <span key={index}>
+                {category}
+                {categoryNames?.length - 1 === index ? "" : ", "}
               </span>
             );
           })}

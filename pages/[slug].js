@@ -139,7 +139,9 @@ const BlogDetail = (props) => {
                         <AiOutlineLeft />
                       </i>
                       <span>Previous</span>
-                      <div>{blog?.prev_post?.post_title}</div>
+                      <div className="PrevNextBlog">
+                        {blog?.prev_post?.post_title}
+                      </div>
                     </Link>
                   </button>
                   <button className="next">
@@ -148,7 +150,9 @@ const BlogDetail = (props) => {
                         <AiOutlineRight />
                       </i>
                       <span>Next</span>
-                      <div>{blog.next_post.post_title}</div>
+                      <div className="PrevNextBlog">
+                        {blog.next_post.post_title}
+                      </div>
                     </Link>
                   </button>
                 </NexPreBLGBX>
@@ -814,6 +818,9 @@ const NexPreBLGBX = styled(FlexDiv)`
       color: #9b9b9b;
       font-size: 14px;
     }
+    .PrevNextBlog {
+      color: #2a2a2a;
+    }
     i {
       position: absolute;
       left: 18px;
@@ -829,6 +836,15 @@ const NexPreBLGBX = styled(FlexDiv)`
         right: 18px;
       }
     }
+    &.prev {
+      padding: 12px 60px 12px 12px;
+      text-align: right;
+      align-items: flex-end;
+      i {
+        right: auto;
+        left: 18px;
+      }
+    }
     :hover {
       background: linear-gradient(
         90deg,
@@ -836,6 +852,12 @@ const NexPreBLGBX = styled(FlexDiv)`
         ${(props) => props.theme.GColor2}
       );
       color: #fff !important;
+      i {
+        color: #fff;
+      }
+      .PrevNextBlog {
+        color: #fff;
+      }
     }
   }
 

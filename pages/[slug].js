@@ -52,7 +52,6 @@ export const getServerSideProps = async (context) => {
 const BlogDetail = (props) => {
   const { blog, categories } = props;
   const categoryNames = categories.map((cat) => cat.name);
-  console.log("sd", blog);
   const [isOpen01, setIsOpen01] = useState(false);
   const [headerClass, setHeaderClass] = useState(false);
   const handleScroll02 = () => {

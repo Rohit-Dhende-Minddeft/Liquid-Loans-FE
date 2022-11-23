@@ -37,7 +37,6 @@ function MyApp({ Component, pageProps }) {
           <Component
             {...pageProps}
             isDarkTheme={isDark}
-            categories={pageProps.categories}
           />
           <Footer />
           <ScrollButton isDarkTheme={isDark} />

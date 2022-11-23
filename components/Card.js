@@ -7,15 +7,20 @@ import styles from "../styles/Card.module.css";
 const Card = (props) => {
   const { title, content, author, readingTime, categories } = props;
   const categoryNames = categories.map((cat) => cat.name);
+
   return (
     <>
       <div className="BimgBX01">
-        <Image src={BlogImg01} alt="" />
+        <Image src={BlogImg01} alt="Blog" />
       </div>
       <div className="blogPostTitle01">
         <div className={`${styles.blogPostTitle01CatContainer}`}>
-          {categoryNames.map((category) => {
-            return <span>{category}</span>;
+          {categoryNames.map((category, index) => {
+            return (
+              <span>
+                {category}{categoryNames?.length -1 === index ? "" : ", "}
+              </span>
+            );
           })}
         </div>
         {readingTime && (
@@ -30,7 +35,7 @@ const Card = (props) => {
       )}
       <UserInfoBX className="v2">
         <div className="ImgBX">
-          <Image src={UserImg01} alt="" />
+          <Image src={UserImg01} alt="User" />
         </div>
         {author && (
           <>

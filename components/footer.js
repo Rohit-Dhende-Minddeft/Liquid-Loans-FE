@@ -135,7 +135,7 @@ const Footer = () => {
                   target="_blank"
                   href={{ pathname: "https://testnet.liquidloans.io/" }}
                 >
-                  <Image src={FootArrow} alt="" />
+                  <Image src={FootArrow} alt="arrow" />
                   Testnet
                 </Link>
                 <Link href="/resources">

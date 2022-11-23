@@ -1,11 +1,10 @@
 import React, { Component, useEffect, useState } from "react";
 import styled from "styled-components";
 import ReadingProgress from "react-reading-progress";
-import Gs from "../../styles/theme.config.js";
+import Gs from "../styles/theme.config.js";
 import Link from "next/link";
 import Image from "next/image";
-import { Zoom, Fade } from "react-reveal";
-import ReactTooltip from "react-tooltip";
+import Head from "next/head";
 import { Timeline } from "react-twitter-widgets";
 import {
   AiFillSound,
@@ -17,21 +16,43 @@ import {
 } from "react-icons/ai";
 import { FaFacebook, FaReddit, FaTelegram } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import Media from "../../styles/media-breackpoint";
-import UserImg01 from "../../public/images/user-ico.jpg";
-import DImg01 from "../../public/images/img-01.jpg";
-import DImg02 from "../../public/images/img-02.jpg";
-import VideoThumb from "../../public/images/video-thumb.jpg";
-import VideoThumb02 from "../../public/images/video-thumb02.png";
-import BTMBXico01 from "../../public/images/faq-ico.png";
-import CLback01 from "../../public/images/telegram-back.png";
-import CLback02 from "../../public/images/utube-back.png";
+import Media from "../styles/media-breackpoint";
+import UserImg01 from "../public/images/user-ico.jpg";
+import DImg01 from "../public/images/img-01.jpg";
+import DImg02 from "../public/images/img-02.jpg";
+import VideoThumb from "../public/images/video-thumb.jpg";
+import VideoThumb02 from "../public/images/video-thumb02.png";
+import BTMBXico01 from "../public/images/faq-ico.png";
+import CLback01 from "../public/images/telegram-back.png";
+import CLback02 from "../public/images/utube-back.png";
 
-import UserImg02 from "../../public/images/user-img01.jpg";
+import UserImg02 from "../public/images/user-img01.jpg";
 
 import Sticky from "react-stickynode";
+import { getBlog, getCategories } from "./api/blogs.js";
+
+import parse from "react-html-parser";
+
+export const getServerSideProps = async (context) => {
+  const categories = await getCategories();
+  const postName = context.params.slug;
+  const data = await getBlog(postName);
+
+  const slug = postName === data.post_name ? postName : "";
+
+  if (slug !== "") {
+    return {
+      props: { blog: data, categories },
+    };
+  } else {
+    return { notFound: true };
+  }
+};
 
 const BlogDetail = (props) => {
+  const { blog, categories } = props;
+  const categoryNames = categories.map((cat) => cat.name);
+  console.log("sd", blog);
   const [isOpen01, setIsOpen01] = useState(false);
   const [headerClass, setHeaderClass] = useState(false);
   const handleScroll02 = () => {
@@ -47,6 +68,11 @@ const BlogDetail = (props) => {
 
   return (
     <>
+      <Head>
+        <title>Blog: {blog.post_title}</title>
+        <meta name="description" content={parse(blog.post_content)} />
+        <meta property={`og:title`} content={`${blog.fb_og_title}`} />
+      </Head>
       <HomeBG>
         <ReadingProgress
           className={"Rprogresor " + [headerClass ? " active" : ""]}
@@ -56,13 +82,17 @@ const BlogDetail = (props) => {
             {/* <Fade cascade bottom delay={300} duration={1600}> */}
 
             <MainHeadS>
-              <h1>
-                Centralized (CEX) vs Decentralized Exchanges (DEX):{" "}
-                <span>What You Need to Know</span>
-              </h1>
+              <h1>{blog.post_title}</h1>
 
               <CateLink>
-                <Link href="">DeFi,</Link> <Link href="">Blockchain</Link>
+                {categories?.map((category, index) => (
+                  <div key={category.id}>
+                    <Link href={`/category/${category.slug}`}>
+                      {category.name}
+                      {categories?.length - 1 === index ? "" : ", "}
+                    </Link>
+                  </div>
+                ))}
               </CateLink>
             </MainHeadS>
 
@@ -72,18 +102,16 @@ const BlogDetail = (props) => {
                   <div className="blContainer">
                     <Ltitle01>TABLE OF CONTENTS</Ltitle01>
                     <LlinkBX>
-                      <Link href="#tag01" className="active">
+                      <a href="#tag01" className="active">
                         Quick Takes
-                      </Link>
-                      <Link href="">What is a Centralized Exchange (CEX)?</Link>
-                      <Link href="">Pros and Cons of Centralized Exchanges</Link>
-                      <Link href="">
+                      </a>
+                      <a href="#">What is a Centralized Exchange (CEX)?</a>
+                      <a href="">Pros and Cons of Centralized Exchanges</a>
+                      <a href="">
                         Examples of Centralized Exchanges Failing Their Users
-                      </Link>
-                      <Link href="">What is a Decentralized Exchange (DEX)?</Link>
-                      <Link href="">
-                        Pros and Cons of Decentralized Exchanges
-                      </Link>
+                      </a>
+                      <a href="">What is a Decentralized Exchange (DEX)?</a>
+                      <a href="">Pros and Cons of Decentralized Exchanges</a>
                     </LlinkBX>
                   </div>
                 </Sticky>
@@ -94,7 +122,7 @@ const BlogDetail = (props) => {
                   <div className="ImgBX">
                     <Image src={UserImg01} alt="User" />{" "}
                   </div>{" "}
-                  By <span>Max</span>
+                  By <span>{blog.post_author}</span>
                   <div className="trdSBX">Estimated reading: 18 mins</div>
                   <div className="secondSBX">
                     <button>
@@ -103,252 +131,26 @@ const BlogDetail = (props) => {
                   </div>
                 </UserInfoBX>
 
-                <BlogMContent>
-                  <figure>
-                    <Image src={DImg01} alt="DImage" />
-                  </figure>
-                  <h2>Quick Takes</h2>
-                  <ul>
-                    <li>
-                      The fundamental difference between centralized vs
-                      decentralized exchanges is not having custody over your
-                      coins vs having custody over your coins, respectively.{" "}
-                    </li>
-                    <li>
-                      Centralized Exchanges are notorious for losing and/or
-                      freezing user funds, high middleman fees, and lack of
-                      transparency
-                    </li>
-                    <li>
-                      Decentralized Exchanges offer peer-to-peer, trustless, and
-                      permissionless exchange of digital assets without
-                      middlemen.
-                    </li>
-                  </ul>
-
-                  <h2>What is a Centralized Exchange (CEX)?</h2>
-                  <p>
-                    The first ever crypto trading platforms started as{" "}
-                    centralized exchanges or CEXs for short. They’re
-                    essentially companies that provide trading services, except
-                    they manage cryptocurrencies instead of traditional
-                    currencies. Like every financial organization, they’re
-                    subject to regulations, security checks, and investment
-                    insurance (better known in the US as FDIC).
-                  </p>
-                  <p>
-                    While they never advertise as such, CEXs are asset managers.
-                    Whenever you trade cryptocurrencies from these platforms,
-                    you’re{" "}
-                    transferring financial ownership to the companyand{" "}
-                    trusting that they will use your balance as
-                    intended. In practice, your money goes to a collective
-                    wallet that automatically fulfills everyone’s orders.{" "}
-                  </p>
-                  <p>
-                    We call them custodial wallets. Binance, Coinbase,
-                    Kraken, KuCoin, eToro, and all CEXs have one. In finance,
-                    trust is backed by legal procedures such as:
-                  </p>
-                  <p>
-                    In finance, trust is backed by legal procedures such as:
-                  </p>
-
-                  <ul>
-                    <li>
-                      Know Your Customer (KYC) for user’s
-                      proof-of-identity and proof-of-address
-                    </li>
-                    <li>
-                      Anti-Money Laundering (AML) compliance, which is
-                      one reason CEXs can offer crypto-fiat services
-                    </li>
-                    <li>
-                      Terms and Conditions set by the company that
-                      users must follow to avoid balance freezes
-                    </li>
-                  </ul>
-                  Examples of Centralized Exchanges
-                  <p>
-                    Hundreds of CEXs have appeared since Bitcoin’s inception
-                    (the first one being Mt.Gox in 2010). Many are inactive,
-                    others shut down, and some of them have become the most
-                    popular exchanges worldwide until today. The top 10 by
-                    market volume are:
-                  </p>
-                  <ul className="v2">
-                    <li>Binance (2017) and Binance US</li>
-                    <li>Coinbase (2012)</li>
-                    <li>FTX (2019)</li>
-                    <li>Kraken (2011)</li>
-                    <li>Kucoin (2017)</li>
-                    <li>Gate.io (2013)</li>
-                    <li>Bitstamp (2011)</li>
-                    <li>Gemini (2015)</li>
-                    <li>Coincheck (2012)</li>
-                    <li>Huobi Global (2013)</li>
-                  </ul>
-
-                  <p>
-                    These tend to offer the most token variety. If payment
-                    options and fees are more important to you, the most
-                    recommended are national CEXs. For example, there’s Voyager
-                    for the USA, Newton for Canada, Swyftx for Australia and New
-                    Zealand, and CEX.io for most of Europe.
-                  </p>
-                  <p>
-                    Almost all CEXs are crypto-fiat (otherwise you’re better off
-                    using DEXs). National CEXs only support the
-                    country’s official currency while platforms like Binance
-                    have the 5-10 most used worldwide. Still, almost every
-                    crypto pair is either in BTC or USD, and fiat-fiat pairs are
-                    very rare.
-                  </p>
-                  <p>
-                    Examples of fiat-only CEXs are TDAmeritrade, Fidelity, and
-                    Charles Schwab. Those that expanded with cryptocurrencies
-                    are the minority (e.g., Interactive Brokers), which is to
-                    offer Bitcoin, Ethereum, and three altcoins at most.
-                  </p>
-
-                  <h2 id="tag01">Pros and Cons of Centralized Exchanges</h2>
-                  <p>
-                    Centralized exchanges are not totally ‘bad’, they come with
-                    various advantages and disadvantages.
-                  </p>
-                  <figure>
-                    <Image src={DImg02} alt="DImage" />
-                  </figure>
-                  <h5>Pros of Centralized Exchanges (CEXs)</h5>
-                  <p>
-                    What are some of the reasons you might want to use CEXs?
-                  </p>
-
-                  <ul>
-                    <li>
-                      <h4>CEXs are more beginner-friendly</h4>. Companies
-                      increase revenue and liquidity through adoption, which is
-                      why they’re simpler and more attractive than DEXs. More
-                      exchanges now have minimalistic “Lite” versions to avoid
-                      overwhelming first-time crypto buyers. Not every exchange
-                      can become Binance, so a different selling point is to
-                      make exchanges feature-light, aesthetic, and with many
-                      fiat payment methods.
-                    </li>
-                    <li>
-                      CEXs abide by regulations. They’ve been verified to meet
-                      basic security standards, which brings confidence to
-                      beginner crypto investors. And because they’re regulated,{" "}
-                      <h4>CEXs can offer several regulated services</h4> that
-                      unregulated platforms don’t. International CEXs become
-                      all-in-one crypto platforms, offering prediction markets
-                      trading, lending, debit cards, gift cards, OTC liquidity,
-                      margin trading, and crypto-fiat ramps.
-                    </li>
-                    <li>
-                      <h4>CEXs have the most crypto on-ramps and off-ramps.</h4>{" "}
-                      Provided that you can verify an account, you’ll be able to
-                      access more payment methods than any DEX provides in 2022.
-                      Especially <h4>national</h4> exchanges offer the most
-                      options (but smaller coin selections). CEXs can sell you
-                      crypto for fiat(via credit cards, P2P markets, bank
-                      transfers, Paypal…) or send you fiat money in exchange for
-                      crypto (via bank transfer or cards).
-                    </li>
-                    <li>
-                      Beginners also like that{" "}
-                      <h4>CEXs have customer support </h4>to guide them through
-                      the adoption. Unfortunately, CEXs get a bad rap because
-                      companies don’t prioritize support enough (there are
-                      exceptions), there are more users than agents, and users
-                      have unrealistic expectations. Read reviews and carefully
-                      decide, because you don’t want to have a suspended account
-                      and waste weeks on support tickets.
-                    </li>
-                  </ul>
-
-                  <div className="teleBX">
-                    Join The Leading Crypto Channel
-                    <button>JOIN</button>
-                  </div>
-
-                  <h5>Cons of Centralized Exchanges (CEXs)</h5>
-                  <p>
-                    While CEXs seem like the best place to start with crypto,
-                    it’s not a good idea to stay on them:
-                  </p>
-
-                  <ul>
-                    <li>
-                      You need <h4>constant</h4> verification: KYC is the first
-                      step that allows you <h4>temporary</h4> access to the
-                      services. You may have to re-upload files every few months
-                      or whenever the company updates the Terms. Don’t forget
-                      there’s an algorithm to detect “suspicious” activity,
-                      which can suspend your account anytime for the most
-                      ridiculous reasons.
-                    </li>
-                    <li>
-                      <h4>CEXs don’t support enough coins.</h4> They offer, at
-                      best, a few hundred coins and often skip important ones
-                      (e.g., CoinBase exchange). DEXs can trade any coin in the
-                      blockchain (1000s). CEXs don’t list new coins until months
-                      later, which puts you in the late investor majority.
-                    </li>
-                    <li>
-                      They’re <h4>custodial wallets.</h4> If the founders do an
-                      exit scam or there’s an important cyber-attack, you will
-                      lose crypto. When that happens, they will deny the
-                      incident and hide the loss with “temporary” withdrawal
-                      suspensions. Also, CEXs can change terms without notice
-                      and interpret your compliance. They neither have the
-                      obligation to justify account decisions.
-                    </li>
-                    <li>
-                      They lack <h4>transparency.</h4> You don’t know how
-                      they’re using your idle crypto, and you don’t know who’s
-                      behind the trades. A custodial exchange can trade against
-                      itself or convert user funds to create fake trading volume
-                      and price action. Costs aren’t transparent either, as the
-                      promoted fees aren’t that low compared to the bid-ask
-                      spread (e.g., CoinMarketCap shows ETH at $2,000 but CEXs
-                      offer it at $2,050).
-                    </li>
-                    <li>
-                      <h4>CEXs can trade against you.</h4> While you don’t have
-                      transparency, the company can see everyone’s orders and
-                      capitalize on them (via scam wicks or volume incentives).
-                      You might blame the whales when it’s really insiders
-                      front-running the trades.
-                    </li>
-                  </ul>
-
-                  <div className="utubeBX">
-                    Watch Our Latest Videos.
-                    <button>SUBSCRIBE</button>
-                  </div>
-
-                  <p>
-                    These cons aren’t theoretical risks. They happen all the
-                    time, and several CEXs have gone out of business because of
-                    them.
-                  </p>
-                </BlogMContent>
+                <BlogMContent>{parse(blog.post_content)}</BlogMContent>
 
                 <NexPreBLGBX>
-                  <button className="prev ">
-                    <i>
-                      <AiOutlineLeft />
-                    </i>
-                    <span>Previous</span>
-                    Top 9 Crypto Security Tips the Professionals Use
+                  <button className="prev">
+                    <Link href={`/${blog?.next_post?.post_name}`}>
+                      <i>
+                        <AiOutlineLeft />
+                      </i>
+                      <span>Previous</span>
+                      <div>{blog?.prev_post?.post_title}</div>
+                    </Link>
                   </button>
-                  <button className="next ">
-                    <i>
-                      <AiOutlineRight />
-                    </i>
-                    <span>Next</span>
-                    What are Decentralized Blockchain Oracles?
+                  <button className="next">
+                    <Link href={`/${blog?.next_post?.post_name}`}>
+                      <i>
+                        <AiOutlineRight />
+                      </i>
+                      <span>Next</span>
+                      <div>{blog.next_post.post_title}</div>
+                    </Link>
                   </button>
                 </NexPreBLGBX>
               </BCenterBX>
@@ -376,13 +178,12 @@ const BlogDetail = (props) => {
                 <div className="blContainer v2">
                   <Ltitle01>Categories</Ltitle01>
                   <LlinkBX className="v2">
-                    <Link href="">Blockchain</Link>
-                    <Link href="">DeFi</Link>
-                    <Link href="">Liquid Loans</Link>
-                    <Link href="">PulseChain</Link>
-                    <Link href="">Stablecoins</Link>
-                    <Link href="">Traditional Finance</Link>
-                    <Link href="">All Articles</Link>
+                    {categoryNames.map((item, index) => (
+                      <Link href={""} key={index}>
+                        {item}
+                      </Link>
+                    ))}
+                    <Link href="/">All Articles</Link>
                   </LlinkBX>
                 </div>
 
@@ -411,7 +212,7 @@ const BlogDetail = (props) => {
                   <BtmSbx02>
                     <button className="BTMSbox01">
                       {" "}
-                      <Image src={BTMBXico01} alt="FAQs"/> FAQ’s
+                      <Image src={BTMBXico01} alt="FAQs" /> FAQ’s
                     </button>
                   </BtmSbx02>
                 </div>

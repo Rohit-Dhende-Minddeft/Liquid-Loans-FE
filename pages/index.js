@@ -155,10 +155,7 @@ const Home = (props) => {
                 {filteredData?.slice(0, next)?.map((blog, index) => {
                   return (
                     <div className="postMbx" key={index}>
-                      <Link
-                        href={`/blog-detail/${blog.slug}`}
-                        onClick={() => props.setSlug(blog.slug)}
-                      >
+                      <Link href={`/${blog.slug}`}>
                         <Card
                           key={index}
                           title={blog.post_title}
@@ -533,9 +530,6 @@ const BodyContent = styled.div`
     color: #a7a7a7;
     padding: 0 12px;
     margin-bottom: 28px;
-    span + span {
-      color: #656565;
-    }
   }
   .blogPostTitle02 {
     font-size: 21px;

@@ -83,7 +83,7 @@ function Header(props) {
                 <Link href="/">
                   <Image
                     src={props.isDarkTheme ? DarkLogo : LightLogo}
-                    alt=""
+                    alt="theme"
                   />
                 </Link>
               </Logo>

@@ -26,16 +26,18 @@ import { getCategories, getBlogs } from '../../pages/api/blogs';
 import Card from '../../components/Card';
 
 export const getServerSideProps = async (context) => {
+  const { search } = context.query;
+
   const blogs = await getBlogs();
   const categories = await getCategories();
 
   return {
-    props: { blogs, categories },
+    props: { blogs, categories, search },
   };
 };
 
 const Search = (props) => {
-  const { blogs, setCategory, categories } = props;
+  const { blogs, setCategory, categories, search } = props;
   const [isOpen01, setIsOpen01] = useState(false);
 
   useEffect(() => {
@@ -55,7 +57,7 @@ const Search = (props) => {
     setNext(next + imagePerRow);
   };
 
-  const [filter, setFilter] = useState('all');
+  const [filter, setFilter] = useState(search);
   const [filteredData, setFilteredData] = useState(blogs);
 
   //Handle filter function
@@ -101,7 +103,8 @@ const Search = (props) => {
                   </i>
                   <input
                     type="text"
-                    defaultValue={'Crypto Security'}
+                    className="searchInput"
+                    defaultValue={search}
                     onChange={handleFilterChange}
                   />
                 </div>
@@ -250,6 +253,9 @@ const HeadSbx = styled(FlexDiv)`
     width: 100%;
     margin-top: 15px;
     position: relative;
+    .searchInput {
+      text-transform: capitalize;
+    }
     i {
       position: absolute;
       right: 15px;
@@ -529,7 +535,7 @@ const BodyContent = styled.div`
     color: #a7a7a7;
     padding: 0 12px;
     margin-bottom: 28px;
-    span + span {
+    .readingTime {
       color: #656565;
     }
   }

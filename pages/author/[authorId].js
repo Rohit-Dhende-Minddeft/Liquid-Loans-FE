@@ -45,7 +45,7 @@ export const getServerSideProps = async (context) => {
 const Home = (props) => {
   const [isOpen01, setIsOpen01] = useState(false);
   const { authorPosts, blogs, categories, setCategory } = props;
-  console.log(blogs);
+
   useEffect(() => {
     // window.scrollTo(0, 10)
   }, []);
@@ -578,7 +578,7 @@ const BodyContent = styled.div`
     color: #a7a7a7;
     padding: 0 12px;
     margin-bottom: 28px;
-    span + span {
+    .readingTime {
       color: #656565;
     }
   }

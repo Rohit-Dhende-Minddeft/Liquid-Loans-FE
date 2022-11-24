@@ -1,8 +1,8 @@
-import BlogImg01 from "../public/images/bimg-01.jpg";
-import UserImg01 from "../public/images/user-ico.jpg";
-import styled from "styled-components";
-import Image from "next/image";
-import styles from "../styles/Card.module.css";
+import BlogImg01 from '../public/images/bimg-01.jpg';
+import UserImg01 from '../public/images/user-ico.jpg';
+import styled from 'styled-components';
+import Image from 'next/image';
+import styles from '../styles/Card.module.css';
 
 const Card = (props) => {
   const { title, content, author, readingTime, categories } = props;
@@ -19,14 +19,14 @@ const Card = (props) => {
             return (
               <span key={index}>
                 {category}
-                {categoryNames?.length - 1 === index ? "" : ", "}
+                {categoryNames?.length - 1 === index ? '' : ', '}
               </span>
             );
           })}
         </div>
         {readingTime && (
-          <span>
-            {readingTime} {readingTime <= "1" ? "min" : "mins"}
+          <span className="readingTime">
+            {readingTime} {readingTime <= '1' ? 'min' : 'mins'}
           </span>
         )}
       </div>
@@ -84,7 +84,7 @@ const UserInfoBX = styled(FlexDiv)`
     margin: 0 0 0 25px;
     position: relative;
     &:after {
-      content: "●";
+      content: '●';
       border: none;
       position: absolute;
       left: -15px;

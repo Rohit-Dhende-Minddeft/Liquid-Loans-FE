@@ -16,6 +16,7 @@ import BTMBXico02 from '../public/images/utube-ico.png';
 import Card from '../components/Card';
 import Image from 'next/image';
 import { getCategories, getBlogs } from './api/blogs';
+import { useRouter } from 'next/router';
 
 export const getServerSideProps = async () => {
   const blogs = await getBlogs();
@@ -27,6 +28,7 @@ export const getServerSideProps = async () => {
 
 const Home = (props) => {
   const { categories, blogs, setCategory } = props;
+  const router = useRouter();
   const imagePerRow = 2;
 
   const [next, setNext] = useState(imagePerRow);
@@ -135,6 +137,11 @@ const Home = (props) => {
                       type="text"
                       placeholder="Search ..."
                       onChange={handleFilterChange}
+                      onKeyPress={(e) => {
+                        if (e.key === 'Enter' || e.code === 'NumpadEnter') {
+                          router.push(`/search/${e.target.value}`);
+                        }
+                      }}
                     />
                     <button
                       className="closBTN"
@@ -535,6 +542,9 @@ const BodyContent = styled.div`
     color: #a7a7a7;
     padding: 0 12px;
     margin-bottom: 28px;
+    .readingTime {
+      color: #656565;
+    }
   }
   .blogPostTitle02 {
     font-size: 21px;

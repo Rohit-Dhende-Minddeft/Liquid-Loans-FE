@@ -23,8 +23,15 @@ export const getCategories = async () => {
 };
 
 //Get post by author
-export const getAuthorsPost = async (authorId) => {
+export const getPostsByAuthor = async (authorId) => {
   const res = await fetch(`${baseUrl}/posts/author/${authorId}`);
+  const data = await res.json();
+  return data;
+};
+
+//Get post by search
+export const getPostsBySearch = async (search) => {
+  const res = await fetch(`${baseUrl}/posts/search/${search}`);
   const data = await res.json();
   return data;
 };

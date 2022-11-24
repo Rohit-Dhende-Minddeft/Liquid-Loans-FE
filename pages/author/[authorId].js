@@ -24,12 +24,13 @@ import BlogImg06 from '../../public/images/bimg-06.jpg';
 import BTMBXico01 from '../../public/images/faq-ico.png';
 import BTMBXico02 from '../../public/images/utube-ico.png';
 
-import { getAuthorsPost, getBlogs, getCategories } from '../api/blogs';
+import { getPostsByAuthor, getBlogs, getCategories } from '../api/blogs';
 import Card from '../../components/Card';
+import { useRouter } from 'next/router';
 
 export const getServerSideProps = async (context) => {
   const authorId = context.params.authorId;
-  const authorPosts = await getAuthorsPost(authorId);
+  const authorPosts = await getPostsByAuthor(authorId);
   const blogs = await getBlogs();
   const categories = await getCategories();
 
@@ -45,7 +46,8 @@ export const getServerSideProps = async (context) => {
 const Home = (props) => {
   const [isOpen01, setIsOpen01] = useState(false);
   const { authorPosts, blogs, categories, setCategory } = props;
-
+  const router = useRouter();
+  
   useEffect(() => {
     // window.scrollTo(0, 10)
   }, []);
@@ -152,6 +154,11 @@ const Home = (props) => {
                       type="text"
                       placeholder="Search ..."
                       onChange={handleFilterChange}
+                      onKeyPress={(e) => {
+                        if (e.key === 'Enter' || e.code === 'NumpadEnter') {
+                          router.push(`/search/${e.target.value}`);
+                        }
+                      }}
                     />
                     <button
                       className="closBTN"

@@ -134,7 +134,7 @@ const Search = (props) => {
                   );
                 })}
               </Masonry>
-
+              {filteredData.length === 0 && <HeroTitle02>No Data Found </HeroTitle02>}
               <ButtonBar01>
                 {next < filteredData?.length ? (
                   <button
@@ -314,7 +314,7 @@ const HeroTitle01 = styled(FlexDiv)`
     }
   }
 `;
-const HeroTitle02 = styled.div`
+const HeroTitle02 = styled(FlexDiv)`
   width: 100%;
   font-size: 26px;
   font-weight: 600;

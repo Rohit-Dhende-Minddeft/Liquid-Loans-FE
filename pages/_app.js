@@ -1,15 +1,13 @@
-import "../styles/globals.css";
-import React, { useState } from "react";
-import Header from "../components/header";
-import { ThemeProvider } from "styled-components";
-import { theme } from "../styles/theme";
-import Footer from "../components/footer";
-import ScrollButton from "../components/scrollButton";
-import Gs from "../styles/theme.config";
-import { getCategories } from "./api/blogs";
-import { AppWrapper } from "../context/state";
-import Head from "next/head";
-
+import '../styles/globals.css';
+import React, { useState } from 'react';
+import Header from '../components/header';
+import { ThemeProvider } from 'styled-components';
+import { theme } from '../styles/theme';
+import Footer from '../components/footer';
+import ScrollButton from '../components/scrollButton';
+import Gs from '../styles/theme.config';
+import { getCategories } from './api/blogs';
+import Head from 'next/head';
 export const getServerSideProps = async () => {
   const categories = await getCategories();
   return {
@@ -21,14 +19,16 @@ function MyApp({ Component, pageProps }) {
   const [isDark, setDarkTheme] = useState(false);
   const selectedTheme = theme(isDark);
 
+  const [category, setCategory] = useState([]);
+
   function setTheme(flag) {
     setDarkTheme(flag);
   }
 
   return (
-    <ThemeProvider theme={selectedTheme}>
+    <>
       <Head>
-        <meta charset="utf-8" />
+        <meta charSet="utf-8" />
 
         <link rel="apple-touch-icon" href="./images/favicon.png" />
         <title>Liquid Loans – 0% DeFi lending on PulseChain</title>
@@ -81,20 +81,27 @@ function MyApp({ Component, pageProps }) {
           content="https://liquidloans.io/images/liquidloans.jpg"
         />
       </Head>
-      <Gs.GlobalStyle />
-      <AppWrapper>
+      <ThemeProvider theme={selectedTheme}>
+        <Gs.GlobalStyle />
         <section className="MainBox clearfix">
           <Header
             isDarkTheme={isDark}
             setTheme={setTheme}
+            categories={category}
+          />
+          <Component
+            {...pageProps}
+            isDarkTheme={isDark}
+            setCategory={(value) => {
+              setCategory(value);
+            }}
             categories={pageProps.categories}
           />
-          <Component {...pageProps} isDarkTheme={isDark} />
           <Footer />
           <ScrollButton isDarkTheme={isDark} />
         </section>
-      </AppWrapper>
-    </ThemeProvider>
+      </ThemeProvider>
+    </>
   );
 }
 

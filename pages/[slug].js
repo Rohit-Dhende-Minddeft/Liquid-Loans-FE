@@ -1,11 +1,11 @@
-import React, { Component, useEffect, useState } from "react";
-import styled from "styled-components";
-import ReadingProgress from "react-reading-progress";
-import Gs from "../styles/theme.config.js";
-import Link from "next/link";
-import Image from "next/image";
-import Head from "next/head";
-import { Timeline } from "react-twitter-widgets";
+import React, { Component, useEffect, useState } from 'react';
+import styled from 'styled-components';
+import ReadingProgress from 'react-reading-progress';
+import Gs from '../styles/theme.config.js';
+import Link from 'next/link';
+import Image from 'next/image';
+import Head from 'next/head';
+import { Timeline } from 'react-twitter-widgets';
 import {
   AiFillSound,
   AiOutlineSearch,
@@ -13,34 +13,34 @@ import {
   AiFillTwitterCircle,
   AiOutlineLeft,
   AiOutlineRight,
-} from "react-icons/ai";
-import { FaFacebook, FaReddit, FaTelegram } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
-import Media from "../styles/media-breackpoint";
-import UserImg01 from "../public/images/user-ico.jpg";
-import DImg01 from "../public/images/img-01.jpg";
-import DImg02 from "../public/images/img-02.jpg";
-import VideoThumb from "../public/images/video-thumb.jpg";
-import VideoThumb02 from "../public/images/video-thumb02.png";
-import BTMBXico01 from "../public/images/faq-ico.png";
-import CLback01 from "../public/images/telegram-back.png";
-import CLback02 from "../public/images/utube-back.png";
+} from 'react-icons/ai';
+import { FaFacebook, FaReddit, FaTelegram } from 'react-icons/fa';
+import { MdEmail } from 'react-icons/md';
+import Media from '../styles/media-breackpoint';
+import UserImg01 from '../public/images/user-ico.jpg';
+import DImg01 from '../public/images/img-01.jpg';
+import DImg02 from '../public/images/img-02.jpg';
+import VideoThumb from '../public/images/video-thumb.jpg';
+import VideoThumb02 from '../public/images/video-thumb02.png';
+import BTMBXico01 from '../public/images/faq-ico.png';
+import CLback01 from '../public/images/telegram-back.png';
+import CLback02 from '../public/images/utube-back.png';
 
-import UserImg02 from "../public/images/user-img01.jpg";
+import UserImg02 from '../public/images/user-img01.jpg';
 
-import Sticky from "react-stickynode";
-import { getBlog, getCategories } from "./api/blogs.js";
+import Sticky from 'react-stickynode';
+import { getBlog, getCategories } from './api/blogs.js';
 
-import parse from "react-html-parser";
+import parse from 'react-html-parser';
 
 export const getServerSideProps = async (context) => {
   const categories = await getCategories();
   const postName = context.params.slug;
   const data = await getBlog(postName);
 
-  const slug = postName === data.post_name ? postName : "";
+  const slug = postName === data.post_name ? postName : '';
 
-  if (slug !== "") {
+  if (slug !== '') {
     return {
       props: { blog: data, categories },
     };
@@ -62,7 +62,7 @@ const BlogDetail = (props) => {
 
   useEffect(() => {
     // window.scrollTo(0, 10)
-    window.addEventListener("scroll", handleScroll02);
+    window.addEventListener('scroll', handleScroll02);
   }, []);
 
   return (
@@ -74,7 +74,7 @@ const BlogDetail = (props) => {
       </Head>
       <HomeBG>
         <ReadingProgress
-          className={"Rprogresor " + [headerClass ? " active" : ""]}
+          className={'Rprogresor ' + [headerClass ? ' active' : '']}
         />
         <Gs.Container className="blFont">
           <Section1>
@@ -88,7 +88,7 @@ const BlogDetail = (props) => {
                   <div key={category.id}>
                     <Link href={`/category/${category.slug}`}>
                       {category.name}
-                      {categories?.length - 1 === index ? "" : ", "}
+                      {categories?.length - 1 === index ? '' : ', '}
                     </Link>
                   </div>
                 ))}
@@ -97,7 +97,7 @@ const BlogDetail = (props) => {
 
             <BodyContent id="BodyBX">
               <BLeftBX>
-                <Sticky enabled={true} top={120} bottomBoundary={"#BodyBX"}>
+                <Sticky enabled={true} top={120} bottomBoundary={'#BodyBX'}>
                   <div className="blContainer">
                     <Ltitle01>TABLE OF CONTENTS</Ltitle01>
                     <LlinkBX>
@@ -119,8 +119,8 @@ const BlogDetail = (props) => {
               <BCenterBX>
                 <UserInfoBX>
                   <div className="ImgBX">
-                    <Image src={UserImg01} alt="User" />{" "}
-                  </div>{" "}
+                    <Image src={UserImg01} alt="User" />{' '}
+                  </div>{' '}
                   By <span>{blog.post_author}</span>
                   <div className="trdSBX">Estimated reading: 18 mins</div>
                   <div className="secondSBX">
@@ -182,7 +182,7 @@ const BlogDetail = (props) => {
                   <Ltitle01>Categories</Ltitle01>
                   <LlinkBX className="v2">
                     {categoryNames.map((item, index) => (
-                      <Link href={""} key={index}>
+                      <Link href={''} key={index}>
                         {item}
                       </Link>
                     ))}
@@ -196,7 +196,7 @@ const BlogDetail = (props) => {
                   <Link
                     className="VideoLink ani-1"
                     target="_blank"
-                    href={{ pathname: "https://www.youtube.com/c/liquidloans" }}
+                    href={{ pathname: 'https://www.youtube.com/c/liquidloans' }}
                   >
                     <Image src={VideoThumb} alt="VideoThumb" />
                   </Link>
@@ -207,14 +207,14 @@ const BlogDetail = (props) => {
                   <Link
                     className="VideoLink ani-1"
                     target="_blank"
-                    href={{ pathname: "https://www.youtube.com/c/liquidloans" }}
+                    href={{ pathname: 'https://www.youtube.com/c/liquidloans' }}
                   >
                     <Image src={VideoThumb02} alt="VideoThmb" />
                   </Link>
 
                   <BtmSbx02>
                     <button className="BTMSbox01">
-                      {" "}
+                      {' '}
                       <Image src={BTMBXico01} alt="FAQs" /> FAQ’s
                     </button>
                   </BtmSbx02>
@@ -224,17 +224,17 @@ const BlogDetail = (props) => {
                   {/* <Ltitle01>Latest Tweets</Ltitle01>  */}
                   <Timeline
                     dataSource={{
-                      sourceType: "profile",
-                      screenName: "liquidloansio",
+                      sourceType: 'profile',
+                      screenName: 'liquidloansio',
                     }}
                     options={{
-                      height: "400",
-                      maxWidth: "300",
+                      height: '400',
+                      maxWidth: '300',
                     }}
                   />
                 </div>
 
-                <Sticky enabled={true} top={120} bottomBoundary={"#BodyBX"}>
+                <Sticky enabled={true} top={120} bottomBoundary={'#BodyBX'}>
                   <div className="blContainer v2">
                     <Ltitle01>Subscribe</Ltitle01>
                     <SearchBX className="v2">
@@ -285,7 +285,7 @@ const FlexDiv = styled.div`
   flex-wrap: wrap;
 `;
 const HomeBG = styled.div`
-  background-image: url("${(props) => props.theme.BodyBg02}");
+  background-image: url('${(props) => props.theme.BodyBg02}');
   background-repeat: no-repeat;
   background-position: top left;
   .Rprogresor {
@@ -586,7 +586,7 @@ const BlogMContent = styled(FlexDiv)`
       list-style-type: none;
       position: relative;
       :after {
-        content: "●";
+        content: '●';
         border: none;
         color: #8224e9;
         position: absolute;

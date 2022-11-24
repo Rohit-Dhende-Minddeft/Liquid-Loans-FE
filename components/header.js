@@ -1,18 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
-import Gs from "../styles/theme.config";
-import { Fade } from "react-reveal";
-import styled from "styled-components";
-import Link from "next/link";
-import { BiChevronDown } from "react-icons/bi";
-import Collapse from "@kunukn/react-collapse";
+import React, { useEffect, useRef, useState } from 'react';
+import Gs from '../styles/theme.config';
+import { Fade } from 'react-reveal';
+import styled from 'styled-components';
+import Link from 'next/link';
+import { BiChevronDown } from 'react-icons/bi';
+import Collapse from '@kunukn/react-collapse';
 
-import Media from "../styles/media-breackpoint";
+import Media from '../styles/media-breackpoint';
 
-import DarkLogo from "../public/images/darkLogo.png";
-import LightLogo from "../public/images/lightLogo.png";
-import SpriteIMG from "../public/images/sprite.png";
-import Image from "next/image";
-
+import DarkLogo from '../public/images/darkLogo.png';
+import LightLogo from '../public/images/lightLogo.png';
+import SpriteIMG from '../public/images/sprite.png';
+import Image from 'next/image';
 
 function Header(props) {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,17 +53,17 @@ function Header(props) {
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("mouseover", trackMouse);
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('mouseover', trackMouse);
   }, []);
 
   return (
-    <HeaderOuter className={[headerClass ? "fly" : "", headerUp ? "down" : ""]}>
+    <HeaderOuter className={[headerClass ? 'fly' : '', headerUp ? 'down' : '']}>
       <Fade bottom>
         <Gs.Container>
           <Mainheadbox>
             <button
-              className={"MMenu  " + (isOpen3 ? "active" : "")}
+              className={'MMenu  ' + (isOpen3 ? 'active' : '')}
               onClick={() => setIsOpen3((state) => !state)}
             >
               <span></span>
@@ -73,7 +72,7 @@ function Header(props) {
             </button>
 
             <div
-              className={"Menuouter02  " + (isOpen3 ? "active" : "")}
+              className={'Menuouter02  ' + (isOpen3 ? 'active' : '')}
               onClick={() => setIsOpen3((state) => !state)}
             >
               &nbsp;
@@ -94,7 +93,7 @@ function Header(props) {
               isOpen={isOpen3}
               className="SmenuFix collapse-css-transition"
             >
-              <HeadRMBX className={isOpen4 ? "SMfix01" : ""}>
+              <HeadRMBX className={isOpen4 ? 'SMfix01' : ''}>
                 <HeadCenterBox>
                   <nav className="desktop-menu">
                     <div className="menuFixer001" ref={articleRef}>
@@ -106,7 +105,7 @@ function Header(props) {
                           <div className="MenuBoxInner">
                             <div
                               className={
-                                "arrow-up  " + (isOpen5 ? "active" : "")
+                                'arrow-up  ' + (isOpen5 ? 'active' : '')
                               }
                             ></div>
                             {props.categories?.map((categorie, index) => {
@@ -137,7 +136,7 @@ function Header(props) {
                           <div className="MenuBoxInner">
                             <div
                               className={
-                                "arrow-up a01 " + (isOpen ? "active" : "")
+                                'arrow-up a01 ' + (isOpen ? 'active' : '')
                               }
                             ></div>
                             <Link
@@ -174,7 +173,7 @@ function Header(props) {
                                 setIsOpen3(false);
                               }}
                               href={{
-                                pathname: "https://docs.liquidloans.io/",
+                                pathname: 'https://docs.liquidloans.io/',
                               }}
                             >
                               <div className="Mi Mi3"></div>Knowledge
@@ -213,7 +212,7 @@ function Header(props) {
                           >
                             <div
                               className={
-                                "arrow-up a02  " + (isOpen2 ? "active" : "")
+                                'arrow-up a02  ' + (isOpen2 ? 'active' : '')
                               }
                             ></div>
                             <Link
@@ -248,7 +247,7 @@ function Header(props) {
                             <Link
                               target="_blank"
                               href={{
-                                pathname: "https://testnet.liquidloans.io/",
+                                pathname: 'https://testnet.liquidloans.io/',
                               }}
                               onClick={() => {
                                 setIsOpen2(false);
@@ -304,8 +303,8 @@ function Header(props) {
                   <BorrowBtn>
                     <Link
                       target="_blank"
-                      href={{ pathname: "https://testnet.liquidloans.io/" }}
-                      style={{ color: "white" }}
+                      href={{ pathname: 'https://testnet.liquidloans.io/' }}
+                      style={{ color: 'white' }}
                     >
                       LAUNCH TESTNET
                     </Link>
@@ -315,12 +314,12 @@ function Header(props) {
                     isOpen={isOpen4}
                     className="collapse-css-transition"
                   >
-                    <LaungDDBX className={"  " + (isOpen4 ? "active" : "")}>
+                    <LaungDDBX className={'  ' + (isOpen4 ? 'active' : '')}>
                       <div id="google_translate_element"></div>
                     </LaungDDBX>
 
                     <div
-                      className={"Menuouter  " + (isOpen4 ? "active" : "")}
+                      className={'Menuouter  ' + (isOpen4 ? 'active' : '')}
                       onClick={() => setIsOpen4((state) => !state)}
                     ></div>
                   </Collapse>
@@ -454,6 +453,11 @@ const Mainheadbox = styled(FlexDiv)`
       overflow-y: auto !important;
       overflow-x: hidden !important;
       max-height: 80vh;
+    }
+  }
+  ${Media.xs} {
+    .SmenuFix {
+      top: 55px;
     }
   }
 `;
@@ -703,6 +707,10 @@ const MenuBox = styled.div`
     position: relative;
     top: auto;
     left: auto;
+    &.v2 {
+      right: auto;
+      left: auto;
+    }
   }
   &.SBox {
     right: 0;

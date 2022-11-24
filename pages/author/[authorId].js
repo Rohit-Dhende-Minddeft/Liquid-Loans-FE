@@ -1,45 +1,67 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Gs from '../styles/theme.config';
+import Gs from '../../styles/theme.config';
 import Link from 'next/link';
-import Media from '../styles/media-breackpoint';
+import Image from 'next/image';
+import { AiFillLinkedin, AiFillTwitterSquare } from 'react-icons/ai';
+import Media from '../../styles/media-breackpoint';
 import Masonry from 'react-masonry-css';
 
-import HeroImg from '../public/images/banner-01.jpg';
-import UserImg01 from '../public/images/user-ico.jpg';
-import ShadowBX from '../public/images/banner-shadown.jpg';
-import IcoSearch from '../public/images/search-symbol.png';
-import HowitwrkBG from '../public/images/bxbg01.jpg';
+import HeroImg from '../../public/images/banner-01.jpg';
+import UserImg01 from '../../public/images/user-ico.jpg';
+import ShadowBX from '../../public/images/banner-shadown.jpg';
+import IcoSearch from '../../public/images/search-symbol.png';
+import HowitwrkBG from '../../public/images/bxbg01.jpg';
+import UserImg02 from '../../public/images/user-img02.png';
 
-import BTMBXico01 from '../public/images/faq-ico.png';
-import BTMBXico02 from '../public/images/utube-ico.png';
-import Card from '../components/Card';
-import Image from 'next/image';
-import { getCategories, getBlogs } from './api/blogs';
+import BlogImg01 from '../../public/images/bimg-01.jpg';
+import BlogImg02 from '../../public/images/bimg-02.jpg';
+import BlogImg03 from '../../public/images/bimg-03.jpg';
+import BlogImg04 from '../../public/images/bimg-04.jpg';
+import BlogImg05 from '../../public/images/bimg-05.jpg';
+import BlogImg06 from '../../public/images/bimg-06.jpg';
 
-export const getServerSideProps = async () => {
+import BTMBXico01 from '../../public/images/faq-ico.png';
+import BTMBXico02 from '../../public/images/utube-ico.png';
+
+import { getAuthorsPost, getBlogs, getCategories } from '../api/blogs';
+import Card from '../../components/Card';
+
+export const getServerSideProps = async (context) => {
+  const authorId = context.params.authorId;
+  const authorPosts = await getAuthorsPost(authorId);
   const blogs = await getBlogs();
   const categories = await getCategories();
-  return {
-    props: { blogs, categories },
-  };
+
+  if (authorPosts.length !== 0) {
+    return {
+      props: { authorPosts, blogs, categories },
+    };
+  } else {
+    return { notFound: true };
+  }
 };
 
 const Home = (props) => {
-  const { categories, blogs, setCategory } = props;
-  const imagePerRow = 2;
-
-  const [next, setNext] = useState(imagePerRow);
-  const handleMoreImage = () => {
-    setNext(next + imagePerRow);
-  };
   const [isOpen01, setIsOpen01] = useState(false);
+  const { authorPosts, blogs, categories, setCategory } = props;
+  console.log(blogs);
+  useEffect(() => {
+    // window.scrollTo(0, 10)
+  }, []);
 
   const breakpointColumnsObj = {
     default: 3,
     1100: 3,
     768: 2,
     600: 1,
+  };
+
+  const imagePerRow = 2;
+
+  const [next, setNext] = useState(imagePerRow);
+  const handleMoreImage = () => {
+    setNext(next + imagePerRow);
   };
 
   const [filter, setFilter] = useState('all');
@@ -52,7 +74,7 @@ const Home = (props) => {
 
   //Filters the blogs according to the option selected
   useEffect(() => {
-    const filteredData = blogs?.filter((item, index) => {
+    const filteredData = blogs?.filter((item) => {
       if (filter === 'all') {
         return item;
       } else if (
@@ -71,7 +93,6 @@ const Home = (props) => {
   useEffect(() => {
     setCategory(categories);
   }, [categories, setCategory]);
-
   return (
     <>
       <HomeBG>
@@ -80,51 +101,47 @@ const Home = (props) => {
             {/* <Fade cascade bottom delay={300} duration={1600}> */}
 
             <MainHeadBX>
-              <MHSbx01>
-                <Image src={HeroImg} alt="HeroImage" />
-              </MHSbx01>
-              <MHSbx02>
-                <HeroTitle01>
-                  <Link href="">DeFi</Link>
-                  <Link href="">Blockchain</Link>
-                </HeroTitle01>
-                <HeroTitle02>
-                  Centralized (CEX) vs Decentralized Exchanges (DEX):
-                  <span> What You Need to Know</span>
-                </HeroTitle02>
-                <HeroText01>
-                  Understanding Centralized vs Decentralized Exchanges is vital
-                  to operating properly in the ever-growing DeFi landscape.
-                  Learn more here
-                </HeroText01>
-                <UserInfoBX>
-                  <div className="ImgBX">
-                    <Image src={UserImg01} alt="UserImage" />
+              <HeadSbx>
+                <div className="userBX">
+                  <i>
+                    <Image
+                      src={UserImg02}
+                      alt="User"
+                      width="auto"
+                      height="auto"
+                    />
+                  </i>
+                  <h2>{authorPosts.length > 0 && authorPosts[0].author}</h2>
+                </div>
+                <div className="userInfoContent">
+                  <h3>
+                    About {authorPosts.length > 0 && authorPosts[0].author}
+                  </h3>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Duis ultrices lorem nec arcu blandit imperdiet. Quisque
+                    gravida, nis andit imperdiet. Quisque gravida, nisl id ie
+                    gravida, nis andit imperdiet. Quisque gravida, n
+                    condimentum, velit leo maximus ante, nec aliquam neque leo
+                    eu diam.
+                  </p>
+                  <div className="userbioLinkBX">
+                    <Link href="">
+                      <AiFillLinkedin />
+                    </Link>
+                    <Link href="">
+                      <AiFillTwitterSquare />
+                    </Link>
                   </div>
-                  By <span>Max</span> <div className="secondSBX">18 mins</div>
-                </UserInfoBX>
-              </MHSbx02>
+                </div>
+              </HeadSbx>
             </MainHeadBX>
 
             <BTitle01>
-              <BSubbox01> Latest Articles</BSubbox01>
+              <BSubbox01>
+                <h1> Popular Articles</h1>
+              </BSubbox01>
               <BSubbox02>
-                <div className="CateBX">
-                  <select
-                    name="select"
-                    id="select"
-                    onChange={handleFilterChange}
-                  >
-                    <option value="all">All Articles</option>
-                    {categories?.map((item, index) => {
-                      return (
-                        <option value={item.category_nicename} key={index}>
-                          {item.name}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
                 <div className="SearchBX ani-1">
                   <div
                     className={
@@ -150,6 +167,7 @@ const Home = (props) => {
                 </div>
               </BSubbox02>
             </BTitle01>
+
             <BodyContent>
               <Masonry
                 breakpointCols={breakpointColumnsObj}
@@ -197,22 +215,24 @@ const Home = (props) => {
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Aenean nisl elilis id feugiat in.
                       </span>
-                      <button>READ MORE </button>
+                      <button>READ MORE</button>
                     </div>
                   </BtmSSubbx>
                 </BtmSbx01>
 
                 <BtmSbx02>
                   <button className="BTMSbox01 firstChild">
-                    <Image src={BTMBXico01} alt="FAQs" /> FAQ’s
+                    {' '}
+                    <Image src={BTMBXico01} alt="Faq" /> FAQ’s
                   </button>
                   <button className="BTMSbox01">
-                    <Image src={BTMBXico02} alt="Videos" />
-                    Videos
+                    {' '}
+                    <Image src={BTMBXico02} alt="Videos" /> Videos
                   </button>
                 </BtmSbx02>
               </BottomMBX>
             </BodyContent>
+
             {/* </Fade> */}
           </Section1>
         </Gs.BContainer>
@@ -245,9 +265,10 @@ const MainHeadBX = styled(FlexDiv)`
   -webkit-box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.3);
   box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.03);
   border-radius: 30px;
-  align-items: flex-start;
+  align-items: center;
   position: relative;
   margin-bottom: 92px;
+  min-height: 340px;
   &:after {
     content: '';
     border: none;
@@ -271,60 +292,86 @@ const MainHeadBX = styled(FlexDiv)`
     padding: 15px;
   }
 `;
-const MHSbx01 = styled(FlexDiv)`
-  width: 50%;
-  border-radius: 30px;
-  height: 322px;
-  overflow: hidden;
-  img {
-    width: 100%;
-    height: 100%;
-    border-radius: 30px;
-    object-fit: cover;
+
+const HeadSbx = styled(FlexDiv)`
+  width: 100%;
+  max-width: 790px;
+  padding-left: 20px;
+
+  .userBX {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -1px;
+    color: #000000;
+    i {
+      width: 192px;
+      height: 192px;
+      border-radius: 100px;
+      border: 5px solid #ededed;
+      overflow: hidden;
+      margin-bottom: 8px;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+  .userInfoContent {
+    width: calc(100% - 192px);
+    padding: 8px 8px 8px 70px;
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -1px;
+      color: #000000;
+    }
+    p {
+      font-size: 18px;
+      font-weight: 400;
+      color: #818181;
+      line-height: 24px;
+    }
+  }
+  .userbioLinkBX {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 32px;
+    a {
+      color: #b097ca;
+      margin: 0 9px 0 0;
+      :hover {
+        color: #7239ae;
+      }
+    }
   }
 
   ${Media.sm} {
-    width: 100%;
-    height: 250px;
-  }
-`;
-const MHSbx02 = styled(FlexDiv)`
-  width: 50%;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 10px 10px 10px 42px;
-
-  ${Media.sm} {
-    width: 100%;
-    padding: 10px;
-  }
-`;
-const HeroTitle01 = styled(FlexDiv)`
-  font-size: 15px;
-  color: #a7a7a7;
-  a {
-    color: #a7a7a7;
-    margin-right: 6px;
-    :hover {
-      text-decoration: underline;
+    flex-direction: column;
+    padding: 8px;
+    .userBX {
+      width: 100%;
+      i {
+        width: 110px;
+        height: 110px;
+      }
+    }
+    .userInfoContent {
+      width: 100%;
+      padding: 10px;
+      text-align: center;
+    }
+    .userbioLinkBX {
+      justify-content: center;
     }
   }
 `;
-const HeroTitle02 = styled.div`
-  width: 100%;
-  font-size: 26px;
-  font-weight: 600;
-  color: #000000;
-  letter-spacing: -1px;
-  margin: 35px 0 28px 0;
-  span {
-    color: #8224e9;
-  }
-`;
-const HeroText01 = styled.div`
-  font-size: 18px;
-  color: #818181;
-`;
+
 const UserInfoBX = styled(FlexDiv)`
   width: 100%;
   justify-content: flex-start;
@@ -364,7 +411,7 @@ const UserInfoBX = styled(FlexDiv)`
 const BTitle01 = styled(FlexDiv)`
   width: 100%;
   justify-content: space-between;
-  padding: 10px;
+  padding: 0 10px;
   font-size: 40px;
   font-weight: 600;
   color: #000;
@@ -397,8 +444,6 @@ const BSubbox02 = styled(FlexDiv)`
       width: 0;
       opacity: 0;
       visibility: hidden;
-      transition: all 0.3s ease-in-out;
-
       &.active {
         width: 380px;
         opacity: 1;
@@ -412,7 +457,6 @@ const BSubbox02 = styled(FlexDiv)`
         display: flex;
         width: 25px;
         height: 25px;
-        cursor: pointer;
         :hover {
           opacity: 0.8;
         }
@@ -433,7 +477,6 @@ const BSubbox02 = styled(FlexDiv)`
     width: 45px;
     height: 45px;
     border: none;
-    cursor: pointer;
     background: url(${IcoSearch.src}) 50% 50% no-repeat;
     :hover {
       filter: brightness(1.2);
@@ -535,6 +578,9 @@ const BodyContent = styled.div`
     color: #a7a7a7;
     padding: 0 12px;
     margin-bottom: 28px;
+    span + span {
+      color: #656565;
+    }
   }
   .blogPostTitle02 {
     font-size: 21px;

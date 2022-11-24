@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-const baseUrl = "https://minddeft.net/dev_blog/wp-json/md/v1";
+const baseUrl = 'https://minddeft.com/demo/dev_blog/wp-json/md/v1';
 //Get all blogs
 export const getBlogs = async () => {
   const res = await fetch(`${baseUrl}/posts`);
@@ -18,6 +18,13 @@ export const getBlog = async (postName) => {
 //Get categories
 export const getCategories = async () => {
   const res = await fetch(`${baseUrl}/categories`);
+  const data = await res.json();
+  return data;
+};
+
+//Get post by author
+export const getAuthorsPost = async (authorId) => {
+  const res = await fetch(`${baseUrl}/posts/author/${authorId}`);
   const data = await res.json();
   return data;
 };

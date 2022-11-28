@@ -82,7 +82,6 @@ const BlogDetail = (props) => {
   useEffect(() => {
     setCategories(categories);
   }, [categories, setCategories]);
-  console.log(blog);
   return (
     <>
       <Head>
@@ -196,7 +195,7 @@ const BlogDetail = (props) => {
                   <UserImgBX>
                     <Image src={UserImg02} alt="UserImage" />
                   </UserImgBX>
-                  <h4>About Max</h4>
+                  <h4>{blog.post_author}</h4>
                   <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     Quisque venenatis sit amet metus a dapibus. Duis a euismod

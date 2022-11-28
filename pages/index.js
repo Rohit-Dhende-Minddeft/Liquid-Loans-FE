@@ -62,7 +62,7 @@ const Home = (props) => {
         item.category
           ?.map((cat) => cat.slug?.toLowerCase())
           .includes(filter.toLowerCase()) ||
-        item.author.nick_name?.toLowerCase().includes(filter.toLowerCase())
+        item.author.nickname?.toLowerCase().includes(filter.toLowerCase())
       ) {
         return item;
       }
@@ -73,7 +73,7 @@ const Home = (props) => {
   useEffect(() => {
     setCategories(categories);
   }, [categories, setCategories]);
-  console.log(blogs);
+
   return (
     <>
       <HomeBG>
@@ -172,10 +172,9 @@ const Home = (props) => {
                           key={index}
                           title={blog.post_title}
                           content={blog.descrption}
-                          author={blog.author.nickname}
                           readingTime={blog.reading_time}
                           categories={blog.category}
-                          authorImage={blog.author.avtar}
+                          author={blog.author}
                         />
                       </Link>
                     </div>

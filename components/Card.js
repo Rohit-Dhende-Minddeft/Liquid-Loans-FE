@@ -5,8 +5,9 @@ import Image from 'next/image';
 import styles from '../styles/Card.module.css';
 
 const Card = (props) => {
-  const { title, content, author, readingTime, categories,authorImage } = props;
+  const { title, content, author, readingTime, categories } = props;
   const categoryNames = categories.map((cat) => cat.name);
+
   return (
     <>
       <div className="BimgBX01">
@@ -35,12 +36,12 @@ const Card = (props) => {
       )}
       <UserInfoBX className="v2">
         <div className="ImgBX">
-          <Image src={authorImage ? authorImage : UserImg01} alt="User"  width={29} height={29}/>
+          <Image src={author.avtar ? author.avtar  : UserImg01} alt="User"  width={29} height={29}/>
         </div>
         {author && (
           <>
             By
-            <span>{author.nick_name}</span>
+            <span>{author.nickname}</span>
           </>
         )}
       </UserInfoBX>

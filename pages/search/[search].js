@@ -72,7 +72,7 @@ const Search = (props) => {
         item.category
           ?.map((cat) => cat.slug?.toLowerCase())
           .includes(filter.toLowerCase()) ||
-        item.author?.toLowerCase().includes(filter.toLowerCase())
+        item.author.nickname?.toLowerCase().includes(filter.toLowerCase())
       ) {
         return item;
       }
@@ -122,7 +122,7 @@ const Search = (props) => {
                           key={index}
                           title={blog.post_title}
                           content={blog.descrption}
-                          author={blog.author.nick_name}
+                          author={blog.author.nickname}
                           readingTime={blog.reading_time}
                           categories={blog.category}
                         />

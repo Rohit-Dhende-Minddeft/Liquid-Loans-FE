@@ -17,7 +17,7 @@ export const getBlog = async (postName) => {
 
 //Get categories
 export const getCategories = async () => {
-  const res = await fetch('https://minddeft.net/dev_blog/wp-json/md/v1/categories');
+  const res = await fetch(`${baseUrl}/categories`);
   const data = await res.json();
   return data;
 };
@@ -42,6 +42,7 @@ export const getTags = (html) => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, 'text/html');
   const tagElements = doc.getElementsByClassName('tableContent');
+
   for (let i = 0; i < tagElements.length; i++) {
     tags.push(tagElements[i].innerText);
   }

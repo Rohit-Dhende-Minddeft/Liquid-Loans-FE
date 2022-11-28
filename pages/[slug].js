@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ReadingProgress from 'react-reading-progress';
 import Gs from '../styles/theme.config.js';
@@ -32,6 +32,7 @@ import Sticky from 'react-stickynode';
 import { getBlog, getCategories } from './api/blogs.js';
 import { getTags } from './api/blogs.js';
 import parse from 'react-html-parser';
+import ScrollIntoView from 'react-scroll-into-view';
 
 export const getServerSideProps = async (context) => {
   const categories = await getCategories();
@@ -50,7 +51,8 @@ export const getServerSideProps = async (context) => {
 };
 
 const BlogDetail = (props) => {
-  const { blog, categories } = props;
+  const { blog, categories, setCategories } = props;
+
   const categoryNames = categories.map((cat) => cat.name);
   const [isOpen01, setIsOpen01] = useState(false);
   const [headerClass, setHeaderClass] = useState(false);
@@ -62,13 +64,25 @@ const BlogDetail = (props) => {
 
   const [tags, setTags] = useState([]);
 
+  const [currentTag, setTag] = useState('');
+  const [isCOTClicked, setIsCOTClicked] = useState(false);
+
   useEffect(() => {
     // window.scrollTo(0, 10)
     window.addEventListener('scroll', handleScroll02);
     let tag = getTags(blog.post_content);
     setTags(tag);
+    const tagElements = document.getElementsByClassName('tablecontent');
+
+    for (let i = 0; i < tagElements.length; i++) {
+      tagElements[i].id = ('id', 'tableContent' + i);
+    }
   }, [blog.post_content]);
 
+  useEffect(() => {
+    setCategories(categories);
+  }, [categories, setCategories]);
+  console.log(blog);
   return (
     <>
       <Head>
@@ -106,24 +120,26 @@ const BlogDetail = (props) => {
                     <Ltitle01>TABLE OF CONTENTS</Ltitle01>
                     <LlinkBX>
                       {tags?.map((tag, index) => (
+                        // eslint-disable-next-line jsx-a11y/anchor-is-valid
                         <a
-                          href={`#tableContent-` + index}
-                          className="active"
+                          className={
+                            currentTag === `tag${index}`
+                              ? 'active'
+                              : 'tableOfContent'
+                          }
                           key={index}
+                          onClick={() => setTag('tag' + index)}
                         >
-                          {tag}
+                          <ScrollIntoView
+                            smooth={true}
+                            scrollOptions={{ block: 'center' }}
+                            selector={'#tableContent' + index}
+                            key={index}
+                          >
+                            {tag}
+                          </ScrollIntoView>
                         </a>
                       ))}
-                      {/* <a href="#tag01" className="active">
-                        Quick Takes
-                      </a>
-                      <a href="#">What is a Centralized Exchange (CEX)?</a>
-                      <a href="">Pros and Cons of Centralized Exchanges</a>
-                      <a href="">
-                        Examples of Centralized Exchanges Failing Their Users
-                      </a>
-                      <a href="">What is a Decentralized Exchange (DEX)?</a>
-                      <a href="">Pros and Cons of Decentralized Exchanges</a> */}
                     </LlinkBX>
                   </div>
                 </Sticky>
@@ -146,28 +162,32 @@ const BlogDetail = (props) => {
                 <BlogMContent>{parse(blog.post_content)}</BlogMContent>
 
                 <NexPreBLGBX>
-                  <button className="prev">
-                    <Link href={`/${blog?.next_post?.post_name}`}>
-                      <i>
-                        <AiOutlineLeft />
-                      </i>
-                      <span>Previous</span>
-                      <div className="PrevNextBlog">
-                        {blog?.prev_post?.post_title}
-                      </div>
-                    </Link>
-                  </button>
-                  <button className="next">
-                    <Link href={`/${blog?.next_post?.post_name}`}>
-                      <i>
-                        <AiOutlineRight />
-                      </i>
-                      <span>Next</span>
-                      <div className="PrevNextBlog">
-                        {blog.next_post.post_title}
-                      </div>
-                    </Link>
-                  </button>
+                  {blog.prev_post && (
+                    <button className="prev">
+                      <Link href={`/${blog?.prev_post?.post_name}`}>
+                        <i>
+                          <AiOutlineLeft />
+                        </i>
+                        <span>Previous</span>
+                        <div className="PrevNextBlog">
+                          {blog?.prev_post?.post_title}
+                        </div>
+                      </Link>
+                    </button>
+                  )}
+                  {blog.next_post && (
+                    <button className="next">
+                      <Link href={`/${blog?.next_post?.post_name}`}>
+                        <i>
+                          <AiOutlineRight />
+                        </i>
+                        <span>Next</span>
+                        <div className="PrevNextBlog">
+                          {blog.next_post.post_title}
+                        </div>
+                      </Link>
+                    </button>
+                  )}
                 </NexPreBLGBX>
               </BCenterBX>
 
@@ -378,6 +398,9 @@ const BLeftBX = styled(FlexDiv)`
   .blContainer {
     width: 276px;
     height: auto;
+    .tableOfContent {
+      cursor: pointer;
+    }
     &.v2 {
       width: 100%;
       max-width: 276px;

@@ -34,7 +34,7 @@ export const getServerSideProps = async (context) => {
 };
 
 const Search = (props) => {
-  const { blogs, setCategory, categories, search } = props;
+  const { blogs, setCategories, categories, search } = props;
   const [isOpen01, setIsOpen01] = useState(false);
 
   useEffect(() => {
@@ -81,8 +81,8 @@ const Search = (props) => {
   }, [filter]);
 
   useEffect(() => {
-    setCategory(categories);
-  }, [categories, setCategory]);
+    setCategories(categories);
+  }, [categories, setCategories]);
 
   return (
     <>
@@ -122,7 +122,7 @@ const Search = (props) => {
                           key={index}
                           title={blog.post_title}
                           content={blog.descrption}
-                          author={blog.author}
+                          author={blog.author.nick_name}
                           readingTime={blog.reading_time}
                           categories={blog.category}
                         />

@@ -19,8 +19,7 @@ function MyApp({ Component, pageProps }) {
   const [isDark, setDarkTheme] = useState(false);
   const selectedTheme = theme(isDark);
 
-  const [category, setCategory] = useState([]);
-
+  const [category, setCategories] = useState([]);
   function setTheme(flag) {
     setDarkTheme(flag);
   }
@@ -92,10 +91,9 @@ function MyApp({ Component, pageProps }) {
           <Component
             {...pageProps}
             isDarkTheme={isDark}
-            setCategory={(value) => {
-              setCategory(value);
+            setCategories={(value) => {
+              setCategories(value);
             }}
-            categories={pageProps.categories}
           />
           <Footer />
           <ScrollButton isDarkTheme={isDark} />

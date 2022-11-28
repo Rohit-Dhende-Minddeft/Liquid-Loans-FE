@@ -45,7 +45,7 @@ export const getServerSideProps = async (context) => {
 
 const Home = (props) => {
   const [isOpen01, setIsOpen01] = useState(false);
-  const { authorPosts, blogs, categories, setCategory } = props;
+  const { authorPosts, blogs, categories, setCategories } = props;
   const router = useRouter();
 
   useEffect(() => {
@@ -84,7 +84,7 @@ const Home = (props) => {
         item.category
           ?.map((cat) => cat.slug?.toLowerCase())
           .includes(filter.toLowerCase()) ||
-        item.author?.toLowerCase().includes(filter.toLowerCase())
+        item.author.nick_name?.toLowerCase().includes(filter.toLowerCase())
       ) {
         return item;
       }
@@ -93,8 +93,9 @@ const Home = (props) => {
   }, [filter]);
 
   useEffect(() => {
-    setCategory(categories);
-  }, [categories, setCategory]);
+    setCategories(categories);
+  }, [categories, setCategories]);
+
   return (
     <>
       <HomeBG>
@@ -113,11 +114,11 @@ const Home = (props) => {
                       height="auto"
                     />
                   </i>
-                  <h2>{authorPosts.length > 0 && authorPosts[0].author}</h2>
+                  <h2>{authorPosts.length > 0 && authorPosts[0].author.nick_name}</h2>
                 </div>
                 <div className="userInfoContent">
                   <h3>
-                    About {authorPosts.length > 0 && authorPosts[0].author}
+                    About {authorPosts.length > 0 && authorPosts[0].author.nick_name}
                   </h3>
                   <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -190,7 +191,7 @@ const Home = (props) => {
                           key={index}
                           title={blog.post_title}
                           content={blog.descrption}
-                          author={blog.author}
+                          author={blog.author.nick_name}
                           readingTime={blog.reading_time}
                           categories={blog.category}
                         />

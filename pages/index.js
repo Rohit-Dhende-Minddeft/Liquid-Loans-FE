@@ -27,7 +27,7 @@ export const getServerSideProps = async () => {
 };
 
 const Home = (props) => {
-  const { categories, blogs, setCategory } = props;
+  const { categories, blogs, setCategories } = props;
   const router = useRouter();
   const imagePerRow = 2;
 
@@ -62,7 +62,7 @@ const Home = (props) => {
         item.category
           ?.map((cat) => cat.slug?.toLowerCase())
           .includes(filter.toLowerCase()) ||
-        item.author?.toLowerCase().includes(filter.toLowerCase())
+        item.author.nick_name?.toLowerCase().includes(filter.toLowerCase())
       ) {
         return item;
       }
@@ -71,18 +71,9 @@ const Home = (props) => {
   }, [filter,blogs]);
 
   useEffect(() => {
-    const setIds = (data) => {
-      let abcElements = document.querySelectorAll(`.${data}`);
-    
-      // Set their ids
-      for (let i = 0; i < abcElements.length; i++)
-        abcElements[i].id = `${data}-` + i;
-    };
-    setCategory(categories);
-    setIds()
-  }, [categories, setCategory]);
-
-
+    setCategories(categories);
+  }, [categories, setCategories]);
+  console.log(blogs);
   return (
     <>
       <HomeBG>
@@ -181,9 +172,10 @@ const Home = (props) => {
                           key={index}
                           title={blog.post_title}
                           content={blog.descrption}
-                          author={blog.author}
+                          author={blog.author.nickname}
                           readingTime={blog.reading_time}
                           categories={blog.category}
+                          authorImage={blog.author.avtar}
                         />
                       </Link>
                     </div>

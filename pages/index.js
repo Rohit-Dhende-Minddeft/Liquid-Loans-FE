@@ -17,6 +17,7 @@ import Card from '../components/Card';
 import Image from 'next/image';
 import { getCategories, getBlogs } from './api/blogs';
 import { useRouter } from 'next/router';
+import parse from 'react-html-parser';
 
 export const getServerSideProps = async () => {
   const blogs = await getBlogs();
@@ -171,7 +172,7 @@ const Home = (props) => {
                         <Card
                           key={index}
                           title={blog.post_title}
-                          content={blog.descrption}
+                          content={parse(blog.descrption)}
                           readingTime={blog.reading_time}
                           categories={blog.category}
                           author={blog.author}

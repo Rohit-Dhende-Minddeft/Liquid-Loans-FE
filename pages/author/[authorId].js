@@ -24,13 +24,13 @@ import BlogImg06 from '../../public/images/bimg-06.jpg';
 import BTMBXico01 from '../../public/images/faq-ico.png';
 import BTMBXico02 from '../../public/images/utube-ico.png';
 
-import { getPostsByAuthor, getBlogs, getCategories } from '../api/blogs';
+import { getBlogsByAuthor, getBlogs, getCategories } from '../api/blogs';
 import Card from '../../components/Card';
 import { useRouter } from 'next/router';
 
 export const getServerSideProps = async (context) => {
   const authorId = context.params.authorId;
-  const authorPosts = await getPostsByAuthor(authorId);
+  const authorPosts = await getBlogsByAuthor(authorId);
   const blogs = await getBlogs();
   const categories = await getCategories();
 
@@ -47,7 +47,7 @@ const Home = (props) => {
   const [isOpen01, setIsOpen01] = useState(false);
   const { authorPosts, blogs, categories, setCategory } = props;
   const router = useRouter();
-  
+
   useEffect(() => {
     // window.scrollTo(0, 10)
   }, []);
@@ -153,6 +153,7 @@ const Home = (props) => {
                     <input
                       type="text"
                       placeholder="Search ..."
+                      className="searchInput"
                       onChange={handleFilterChange}
                       onKeyPress={(e) => {
                         if (e.key === 'Enter' || e.code === 'NumpadEnter') {
@@ -451,6 +452,9 @@ const BSubbox02 = styled(FlexDiv)`
       width: 0;
       opacity: 0;
       visibility: hidden;
+      .searchInput {
+        text-transform: capitalize;
+      }
       &.active {
         width: 380px;
         opacity: 1;

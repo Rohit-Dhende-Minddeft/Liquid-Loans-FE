@@ -12,22 +12,19 @@ import ShadowBX from '../../public/images/banner-shadown.jpg';
 import IcoSearch from '../../public/images/search-symbol.png';
 import HowitwrkBG from '../../public/images/bxbg01.jpg';
 
-import BlogImg01 from '../../public/images/bimg-01.jpg';
-import BlogImg02 from '../../public/images/bimg-02.jpg';
-import BlogImg03 from '../../public/images/bimg-03.jpg';
-import BlogImg04 from '../../public/images/bimg-04.jpg';
-import BlogImg05 from '../../public/images/bimg-05.jpg';
-import BlogImg06 from '../../public/images/bimg-06.jpg';
 
 import BTMBXico01 from '../../public/images/faq-ico.png';
 import BTMBXico02 from '../../public/images/utube-ico.png';
 
-import { getCategories, getBlogs } from '../../pages/api/blogs';
+import { getCategories ,getBlogs} from '../../pages/api/blogs';
 import Card from '../../components/Card';
-
+const capitalizeFirstLetter = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
 export const getServerSideProps = async (context) => {
-  const { search } = context.query;
 
+  const { search } = context.query;
+  
   const blogs = await getBlogs();
   const categories = await getCategories();
 
@@ -134,7 +131,9 @@ const Search = (props) => {
                   );
                 })}
               </Masonry>
-              {filteredData.length === 0 && <HeroTitle02>No Data Found </HeroTitle02>}
+              {filteredData.length === 0 && (
+                <HeroTitle02>No Data Found </HeroTitle02>
+              )}
               <ButtonBar01>
                 {next < filteredData?.length ? (
                   <button

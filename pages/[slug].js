@@ -30,7 +30,7 @@ import UserImg02 from '../public/images/user-img01.jpg';
 
 import Sticky from 'react-stickynode';
 import { getBlog, getCategories } from './api/blogs.js';
-
+import { getTags } from './api/blogs.js';
 import parse from 'react-html-parser';
 
 export const getServerSideProps = async (context) => {
@@ -60,10 +60,14 @@ const BlogDetail = (props) => {
     else setHeaderClass(false);
   };
 
+  const [tags, setTags] = useState([]);
+
   useEffect(() => {
     // window.scrollTo(0, 10)
     window.addEventListener('scroll', handleScroll02);
-  }, []);
+    let tag = getTags(blog.post_content);
+    setTags(tag);
+  }, [blog.post_content]);
 
   return (
     <>
@@ -101,7 +105,16 @@ const BlogDetail = (props) => {
                   <div className="blContainer">
                     <Ltitle01>TABLE OF CONTENTS</Ltitle01>
                     <LlinkBX>
-                      <a href="#tag01" className="active">
+                      {tags?.map((tag, index) => (
+                        <a
+                          href={`#tableContent-` + index}
+                          className="active"
+                          key={index}
+                        >
+                          {tag}
+                        </a>
+                      ))}
+                      {/* <a href="#tag01" className="active">
                         Quick Takes
                       </a>
                       <a href="#">What is a Centralized Exchange (CEX)?</a>
@@ -110,7 +123,7 @@ const BlogDetail = (props) => {
                         Examples of Centralized Exchanges Failing Their Users
                       </a>
                       <a href="">What is a Decentralized Exchange (DEX)?</a>
-                      <a href="">Pros and Cons of Decentralized Exchanges</a>
+                      <a href="">Pros and Cons of Decentralized Exchanges</a> */}
                     </LlinkBX>
                   </div>
                 </Sticky>

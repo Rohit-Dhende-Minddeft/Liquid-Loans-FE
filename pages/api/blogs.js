@@ -17,21 +17,33 @@ export const getBlog = async (postName) => {
 
 //Get categories
 export const getCategories = async () => {
-  const res = await fetch(`${baseUrl}/categories`);
+  const res = await fetch('https://minddeft.net/dev_blog/wp-json/md/v1/categories');
   const data = await res.json();
   return data;
 };
 
-//Get post by author
-export const getPostsByAuthor = async (authorId) => {
+//Get blog by author
+export const getBlogsByAuthor = async (authorId) => {
   const res = await fetch(`${baseUrl}/posts/author/${authorId}`);
   const data = await res.json();
   return data;
 };
 
-//Get post by search
-export const getPostsBySearch = async (search) => {
+//Get blog by search
+export const getBlogsBySearch = async (search) => {
   const res = await fetch(`${baseUrl}/posts/search/${search}`);
   const data = await res.json();
   return data;
+};
+
+//get text of all tags with same classname in html
+export const getTags = (html) => {
+  const tags = [];
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  const tagElements = doc.getElementsByClassName('tableContent');
+  for (let i = 0; i < tagElements.length; i++) {
+    tags.push(tagElements[i].innerText);
+  }
+  return tags;
 };

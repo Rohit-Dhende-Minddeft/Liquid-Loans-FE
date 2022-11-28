@@ -54,7 +54,7 @@ const Home = (props) => {
 
   //Filters the blogs according to the option selected
   useEffect(() => {
-    const filteredData = blogs?.filter((item, index) => {
+    const filteredData = blogs?.filter((item) => {
       if (filter === 'all') {
         return item;
       } else if (
@@ -68,11 +68,20 @@ const Home = (props) => {
       }
     });
     setFilteredData(filteredData);
-  }, [filter]);
+  }, [filter,blogs]);
 
   useEffect(() => {
+    const setIds = (data) => {
+      let abcElements = document.querySelectorAll(`.${data}`);
+    
+      // Set their ids
+      for (let i = 0; i < abcElements.length; i++)
+        abcElements[i].id = `${data}-` + i;
+    };
     setCategory(categories);
+    setIds()
   }, [categories, setCategory]);
+
 
   return (
     <>
@@ -120,7 +129,7 @@ const Home = (props) => {
                     <option value="all">All Articles</option>
                     {categories?.map((item, index) => {
                       return (
-                        <option value={item.category_nicename} key={index}>
+                        <option value={item.name} key={index}>
                           {item.name}
                         </option>
                       );
@@ -136,6 +145,7 @@ const Home = (props) => {
                     <input
                       type="text"
                       placeholder="Search ..."
+                      className="searchInput"
                       onChange={handleFilterChange}
                       onKeyPress={(e) => {
                         if (e.key === 'Enter' || e.code === 'NumpadEnter') {
@@ -405,7 +415,9 @@ const BSubbox02 = styled(FlexDiv)`
       opacity: 0;
       visibility: hidden;
       transition: all 0.3s ease-in-out;
-
+      .searchInput {
+        text-transform: capitalize;
+      }
       &.active {
         width: 380px;
         opacity: 1;

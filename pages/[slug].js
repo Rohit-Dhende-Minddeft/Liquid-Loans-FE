@@ -101,11 +101,11 @@ const BlogDetail = (props) => {
               <h1>{blog.post_title}</h1>
 
               <CateLink>
-                {categories?.map((category, index) => (
+                {blog.category?.map((category, index) => (
                   <div key={category.id}>
                     <Link href={`/category/${category.slug}`}>
                       {category.name}
-                      {categories?.length - 1 === index ? '' : ', '}
+                      {blog.category?.length - 1 === index ? '' : ', '}
                     </Link>
                   </div>
                 ))}

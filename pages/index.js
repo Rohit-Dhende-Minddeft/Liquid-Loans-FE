@@ -18,6 +18,8 @@ import Image from 'next/image';
 import { getCategories, getBlogs } from './api/blogs';
 import { useRouter } from 'next/router';
 import parse from 'react-html-parser';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 export const getServerSideProps = async () => {
   const blogs = await getBlogs();
@@ -30,13 +32,23 @@ export const getServerSideProps = async () => {
 const Home = (props) => {
   const { categories, blogs, setCategories } = props;
   const router = useRouter();
-  const imagePerRow = 2;
+  const imagePerRow = 3;
 
   const [next, setNext] = useState(imagePerRow);
   const handleMoreImage = () => {
     setNext(next + imagePerRow);
   };
   const [isOpen01, setIsOpen01] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (blogs) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+    }
+  }, [blogs]);
 
   const breakpointColumnsObj = {
     default: 3,
@@ -69,7 +81,7 @@ const Home = (props) => {
       }
     });
     setFilteredData(filteredData);
-  }, [filter,blogs]);
+  }, [filter, blogs]);
 
   useEffect(() => {
     setCategories(categories);
@@ -165,22 +177,27 @@ const Home = (props) => {
                 className="my-masonry-grid"
                 columnClassName="my-masonry-grid_column"
               >
-                {filteredData?.slice(0, next)?.map((blog, index) => {
-                  return (
-                    <div className="postMbx" key={index}>
-                      <Link href={`/${blog.slug}`}>
-                        <Card
-                          key={index}
-                          title={blog.post_title}
-                          content={parse(blog.descrption)}
-                          readingTime={blog.reading_time}
-                          categories={blog.category}
-                          author={blog.author}
-                        />
-                      </Link>
-                    </div>
-                  );
-                })}
+                {isLoading ? (
+                  <Skeleton duration={1} height={30} width={300} />
+                ) : (
+                  filteredData?.slice(0, next)?.map((blog, index) => {
+                    return (
+                      <div className="postMbx" key={index}>
+                        <Link href={`/${blog.slug}`}>
+                          <Card
+                            key={index}
+                            title={blog.post_title}
+                            content={parse(blog.descrption)}
+                            readingTime={blog.reading_time}
+                            categories={blog.category}
+                            author={blog.author}
+                            bannerImage={blog.banner_img_url}
+                          />
+                        </Link>
+                      </div>
+                    );
+                  })
+                )}
               </Masonry>
 
               <ButtonBar01>
@@ -192,8 +209,10 @@ const Home = (props) => {
                   >
                     Load More +
                   </button>
-                ) : (
+                ) : filteredData.length > 0 ? (
                   <h1>You catched up with all the articles </h1>
+                ) : (
+                  <h1>Oops no Article found</h1>
                 )}
               </ButtonBar01>
 

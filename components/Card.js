@@ -5,13 +5,14 @@ import Image from 'next/image';
 import styles from '../styles/Card.module.css';
 
 const Card = (props) => {
-  const { title, content, author, readingTime, categories } = props;
+  const { title, content, author, readingTime, categories, bannerImage } =
+    props;
   const categoryNames = categories.map((cat) => cat.name);
 
   return (
     <>
       <div className="BimgBX01">
-        <Image src={BlogImg01} alt="Blog" />
+        <img src={bannerImage ? bannerImage : BlogImg01.src} alt="Blog" />
       </div>
       <div className="blogPostTitle01">
         <div className={`${styles.blogPostTitle01CatContainer}`}>
@@ -36,7 +37,12 @@ const Card = (props) => {
       )}
       <UserInfoBX className="v2">
         <div className="ImgBX">
-          <Image src={author.avtar ? author.avtar  : UserImg01} alt="User"  width={29} height={29}/>
+          <Image
+            src={author.avtar ? author.avtar : UserImg01}
+            alt="User"
+            width={29}
+            height={29}
+          />
         </div>
         {author && (
           <>
